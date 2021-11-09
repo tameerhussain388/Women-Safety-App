@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Women Safety App</string>
+    <string name="angel">Angel</string>
+    <string name="be_brave">Be Brave</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register_here">Register</string>
+    <string name="create_new_account">Create new Account</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="contact">Contact</string>
+    <string name="age">Age</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="alert">Alert</string>
+    <string name="guardians">Guardians</string>
+    <string name="emergency_centers">Emergency Centers</string>
+    <string name="call_police">Call Police</string>
+</resources>

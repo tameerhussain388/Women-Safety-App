@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink_200">#ffa7b6</color>
+    <color name="pink_500">#ff7586</color>
+    <color name="pink_700">#c84359</color>
+    <color name="primary_color">#E49AA6</color>
+    <color name="secondary_color">#CD4359</color>
+    <color name="teal_200">#333333</color>
+    <color name="teal_700">#000000</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

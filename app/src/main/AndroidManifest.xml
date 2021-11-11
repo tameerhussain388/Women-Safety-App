@@ -11,7 +11,9 @@
         android:theme="@style/Theme.WomenSafetyApp">
         <activity
             android:name=".LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            />
         <activity
             android:name=".SignUpActivity"
             android:exported="true" />

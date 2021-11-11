@@ -1,15 +1,12 @@
 package com.fyp.womensafetyapp;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import java.util.regex.Pattern;
+import com.fyp.womensafetyapp.Authentication_Controller.SignUp;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -24,8 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        btnRegister = findViewById(R.id.btnSignUp);
 
+        btnRegister = findViewById(R.id.btnSignUp);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -34,9 +31,10 @@ public class SignUpActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(view -> {
             if (validateFields()) {
-                Toast.makeText(this, "Register", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
-                startActivity(intent);
+//                Toast.makeText(this, "Register", Toast.LENGTH_LONG).show();
+//                Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
+//                startActivity(intent);
+                SignUp.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),SignUpActivity.this);
             }
         });
     }

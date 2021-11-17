@@ -5,8 +5,8 @@ import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.regex.Pattern;
-import com.fyp.womensafetyapp.Authentication_Controller.SignUp;
-import com.google.firebase.auth.FirebaseAuth;
+import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
+
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -17,10 +17,12 @@ public class SignUpActivity extends AppCompatActivity {
     public EditText etContact;
     public EditText etAge;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        SignUp firebaseRepo=new SignUp();
 
         btnRegister = findViewById(R.id.btnSignUp);
         etName = findViewById(R.id.etName);
@@ -34,7 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Register", Toast.LENGTH_LONG).show();
 //                Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
 //                startActivity(intent);
-                SignUp.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),SignUpActivity.this);
+                firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),SignUpActivity.this);
+                firebaseRepo.storeUserData(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),this);
             }
         });
     }

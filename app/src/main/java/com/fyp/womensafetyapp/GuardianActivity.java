@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreGuardians;
 
-public class AddGuardians extends AppCompatActivity {
+public class GuardianActivity extends AppCompatActivity {
 
     public EditText guardian_1;
     public EditText guardian_2;
@@ -18,7 +18,7 @@ public class AddGuardians extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_guardians);
+        setContentView(R.layout.activity_guardian);
 
         StoreGuardians guardians=new StoreGuardians();
         guardian_1=findViewById(R.id.guardian_1);

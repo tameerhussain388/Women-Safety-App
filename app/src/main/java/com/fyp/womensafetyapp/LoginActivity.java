@@ -1,5 +1,7 @@
 package com.fyp.womensafetyapp;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,6 +13,13 @@ import android.widget.Toast;
 
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.google.firebase.auth.FirebaseAuth;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,17 +31,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
         tvRegister = findViewById(R.id.tvRegister);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
+        requestPermissions();
         btnSignIn.setOnClickListener(view -> {
             if (validateEmail() && validatePassword()) {
-//                Toast.makeText(this, "Logged In", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-//                startActivity(intent);
                 if (TextUtils.isEmpty(etEmail.toString())) {
                     Toast.makeText(getApplicationContext(), "Enter your mail address", Toast.LENGTH_SHORT).show();
                     return;
@@ -41,15 +48,35 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //authenticate user
                 SignIn.singInUser(etEmail.getText().toString(),etPassword.getText().toString(),LoginActivity.this);
+                Intent intent = new Intent(this,DashboardActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
         tvRegister.setOnClickListener(view -> {
-            Toast.makeText(this, "Sign Up", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
+    }
+
+    private void requestPermissions(){
+        Dexter.withContext(this)
+                .withPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS,Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new MultiplePermissionsListener(){
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if(!multiplePermissionsReport.areAllPermissionsGranted()){
+                            Toast.makeText(getApplicationContext(),"Please Grant Permissions to use the app",Toast.LENGTH_LONG).show();
+                            finishAffinity();
+                        }
+                    }
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
+                }).check();
     }
 
     private boolean validateEmail() {

@@ -33,9 +33,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(view -> {
             if (validateFields()) {
-//                Toast.makeText(this, "Register", Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(SignUpActivity.this, DashboardActivity.class);
-//                startActivity(intent);
                 firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),SignUpActivity.this);
                 firebaseRepo.storeUserData(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),this);
             }

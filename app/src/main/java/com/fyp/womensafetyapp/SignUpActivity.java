@@ -1,12 +1,15 @@
 package com.fyp.womensafetyapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.regex.Pattern;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
-
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
+import com.fyp.womensafetyapp.Models.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -30,11 +33,10 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etContact = findViewById(R.id.etContact);
         etAge = findViewById(R.id.etAge);
-
         btnRegister.setOnClickListener(view -> {
             if (validateFields()) {
-                firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),SignUpActivity.this);
-                firebaseRepo.storeUserData(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),this);
+                UserModel user=new UserModel(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString());
+                firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),user,SignUpActivity.this);
             }
         });
     }

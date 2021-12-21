@@ -15,17 +15,14 @@ public class SignIn {
     public static void singInUser(String email, String password, Context context)
     {
         auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            //When there was an error
-                             Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Intent intent = new Intent(context, DashboardActivity.class);
-                            context.startActivity(intent);
-                            ((Activity) context).finish();
-                        }
+                .addOnCompleteListener((Activity) context, task -> {
+                    if (!task.isSuccessful()) {
+                        //When there was an error
+                         Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    } else {
+                        Intent intent = new Intent(context, DashboardActivity.class);
+                        context.startActivity(intent);
+                        ((Activity) context).finish();
                     }
                 });
     }

@@ -1,5 +1,4 @@
 package com.fyp.womensafetyapp;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -7,7 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreGuardians;
-
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 public class GuardianActivity extends AppCompatActivity {
 
     public EditText guardian_1;
@@ -20,6 +19,7 @@ public class GuardianActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guardian);
 
+
         StoreGuardians guardians=new StoreGuardians();
         guardian_1=findViewById(R.id.guardian_1);
         guardian_2=findViewById(R.id.guardian_2);
@@ -30,8 +30,7 @@ public class GuardianActivity extends AppCompatActivity {
             String g1=guardian_1.getText().toString();
             String g2=guardian_2.getText().toString();
             String g3=guardian_3.getText().toString();
-            guardians.storeGuardians(g1,g2,g3,this);
+            guardians.storeGuardians(g1,g2,g3, Firebase_Auth.getInstance().getUid(),this);
         });
-
     }
 }

@@ -1,6 +1,5 @@
 package com.fyp.womensafetyapp;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
-import com.google.firebase.auth.FirebaseAuth;
+import com.fyp.womensafetyapp.Models.UserModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
@@ -31,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        FirebaseAuth auth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_login);
         tvRegister = findViewById(R.id.tvRegister);
         etEmail = findViewById(R.id.etEmail);
@@ -49,9 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 SignIn.singInUser(etEmail.getText().toString(),etPassword.getText().toString(),LoginActivity.this);
-                Intent intent = new Intent(this,DashboardActivity.class);
-                startActivity(intent);
-                finish();
             }
         });
         tvRegister.setOnClickListener(view -> {
@@ -96,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validatePassword() {
         String passwordInput = etPassword.getText().toString().trim();
-
         if (passwordInput.isEmpty()) {
             etPassword.setError("Password can't be empty");
             return false;

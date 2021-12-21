@@ -17,21 +17,24 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.SignOut;
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity {
-
     public Button btnAlert;
     public Button btnCenters;
     public Button btnCallPolice;
@@ -49,8 +52,12 @@ public class DashboardActivity extends AppCompatActivity {
         btnCallPolice = findViewById(R.id.btnCallPolice);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        btnAlert.setOnClickListener(view -> getLastLocation());
+//        btnAlert.setOnClickListener(view -> getLastLocation());
 
+        btnAlert.setOnClickListener(view -> {
+            Log.i("User in dashboard", FirebaseUser.getUser().name);
+            Log.i("Guardian in dashboard", FirebaseGuardians.getGuardians().g1);
+        });
         btnCenters.setOnClickListener(view -> startCenterActivity());
 
         btnCallPolice.setOnClickListener(view -> notifyPolice());
@@ -74,11 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.logout_btn) {
-            FirebaseAuth.getInstance().signOut();
-            Toast.makeText(getApplicationContext(), "Logout", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(DashboardActivity.this,LoginActivity.class);
-            startActivity(intent);
-            finish();
+            SignOut.signOutUser(this);
         }
         return true;
     }
@@ -193,5 +196,12 @@ public class DashboardActivity extends AppCompatActivity {
                 notifyPolice();
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
+        FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
     }
 }

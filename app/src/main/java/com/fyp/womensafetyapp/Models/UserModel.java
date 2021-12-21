@@ -7,7 +7,7 @@ public class UserModel {
         this.number=number;
         this.age=age;
     }
-    String name;
-    String number;
-    String age;
+    public String name;
+    public String number;
+    public String age;
 }

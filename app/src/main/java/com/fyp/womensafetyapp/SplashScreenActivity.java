@@ -1,5 +1,4 @@
 package com.fyp.womensafetyapp;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,32 +16,36 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.addAuthStateListener(authStateListener);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        },SPLASH_SCREEN);
     }
 
-    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-            if (firebaseUser != null) {
-                new Handler().postDelayed(() -> {
-                    Intent intent = new Intent(SplashScreenActivity.this,DashboardActivity.class);
-                    startActivity(intent);
-                    finish();
-                },SPLASH_SCREEN);
-            }
-            else{
-                new Handler().postDelayed(() -> {
-                    Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                },SPLASH_SCREEN);
-            }
-        }
-    };
+//    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+//        @Override
+//        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+//
+//            if (firebaseUser != null) {
+//                new Handler().postDelayed(() -> {
+//                    Intent intent = new Intent(SplashScreenActivity.this,DashboardActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                },SPLASH_SCREEN);
+//            }
+//            else{
+//                new Handler().postDelayed(() -> {
+//                    Intent intent = new Intent(SplashScreenActivity.this,LoginActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                },SPLASH_SCREEN);
+//            }
+//        }
+//    };
 }

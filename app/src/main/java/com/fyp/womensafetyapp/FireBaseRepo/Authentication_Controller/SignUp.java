@@ -4,74 +4,48 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FireStore;
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreGuardians;
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreUser;
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.LoginActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
+import com.fyp.womensafetyapp.Models.UserModel;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignUp {
-    FirebaseAuth auth=FirebaseAuth.getInstance();
-    FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
-    DocumentReference ref;
-    public void signUpUser(String email, String password, Context context)
+    StoreUser storeUser=new StoreUser();
+    public void signUpUser(String email, String password, UserModel user, Context context)
     {
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>(){
-
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(context, "ERROR",Toast.LENGTH_LONG).show();
-                }
-                else {
-                    context.startActivity(new Intent(context, LoginActivity.class));
-                    ((Activity) context).finish();
-                }
-            }
-        });
+        Firebase_Auth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(context,
+                                "Registration successful!",
+                                Toast.LENGTH_LONG)
+                                .show();
+                        // hide the progress bar
+                        // progressBar.setVisibility(View.GONE);
+                        storeUser.storeUserData(user.name,user.number,user.age,Firebase_Auth.getInstance().getUid(),context);
+                        // if the user created intent to login activity
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        (context).startActivity(intent);
+                        ((Activity)context).finish();
+                    }
+                    else {
+                        // Registration failed
+                        Toast.makeText(
+                               context,
+                                task.getException().getMessage(),
+                                Toast.LENGTH_LONG)
+                                .show();
+                        // hide the progress bar
+                        // progressBar.setVisibility(View.GONE);
+                    }
+                });
     }
-    public void storeUserData(String name,String contact,String age,Context context)
-    {
-        ref=firebaseFirestore.collection("users").document();
-        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                if (documentSnapshot.exists())
-                {
-                    Toast.makeText(context, "Sorry,this user exists", Toast.LENGTH_SHORT).show();
-                } else {
-                    Map<String, Object> reg_entry = new HashMap<>();
-                    reg_entry.put("name",name);
-                    reg_entry.put("contact", contact);
-                    reg_entry.put("age", age);
-
-                    firebaseFirestore.collection("users")
-                            .add(reg_entry)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d("Success","Data added");
-                                    Toast.makeText(context, "Successfully added", Toast.LENGTH_SHORT).show();
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d("Error", e.getMessage());
-                                }
-                            });
-                }
-            }
-        });
-    }
 }

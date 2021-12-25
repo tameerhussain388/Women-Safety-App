@@ -1,8 +1,11 @@
 package com.fyp.womensafetyapp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
@@ -14,6 +17,7 @@ import com.fyp.womensafetyapp.Models.UserModel;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.List;
@@ -53,6 +57,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void requestLocation() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        if(!isEnabled){
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+    }
+
     private void requestPermissions(){
         Dexter.withContext(this)
                 .withPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS,Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -63,12 +76,17 @@ public class LoginActivity extends AppCompatActivity {
                         if(!multiplePermissionsReport.areAllPermissionsGranted()){
                             Toast.makeText(getApplicationContext(),"Please Grant Permissions to use the app",Toast.LENGTH_LONG).show();
                             finishAffinity();
+                        }else {
+                            requestLocation();
                         }
                     }
                     @Override
                     public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
                         permissionToken.continuePermissionRequest();
                     }
+
+
+
                 }).check();
     }
 

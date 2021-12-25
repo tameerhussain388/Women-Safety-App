@@ -28,17 +28,20 @@ import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.SignOut;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
+import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.Dash;
 
 public class DashboardActivity extends AppCompatActivity {
     public Button btnAlert;
     public Button btnCenters;
     public Button btnCallPolice;
     public Button btnGuardian;
+    private static DashboardActivity instance;
     private final static int REQUEST_CODE = 123;
     private FusedLocationProviderClient locationProviderClient;
 
@@ -46,6 +49,9 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        instance = this;
+        Intent backgroundService = new Intent(getApplicationContext(), ScreenOnOffBackgroundService.class);
+        startService(backgroundService);
         btnAlert = findViewById(R.id.btnAlert);
         btnCenters = findViewById(R.id.btnCenters);
         btnGuardian = findViewById(R.id.btnGuardian);
@@ -64,6 +70,10 @@ public class DashboardActivity extends AppCompatActivity {
     private void startCenterActivity() {
         Intent intent = new Intent(DashboardActivity.this,EmergencyCentersActivity.class);
         startActivity(intent);
+    }
+
+    public static DashboardActivity getInstance(){
+        return instance;
     }
 
     @Override
@@ -98,7 +108,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @SuppressLint("MissingPermission")
-    private void getLastLocation() {
+    public void getLastLocation() {
         // check if permissions are given
         if (checkPermissions()) {
             // check if location is enabled
@@ -109,7 +119,7 @@ public class DashboardActivity extends AppCompatActivity {
                     if (location == null) {
                         requestNewLocationData();
                     } else {
-                        sendAlert(location.getLatitude(), location.getLongitude());
+                        sendMessage(location.getLatitude(), location.getLongitude());
                         Toast.makeText(getApplicationContext(), " " + location.getLatitude(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -123,7 +133,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void sendAlert(double latitude, double longitude) {
+    private void sendMessage(double latitude, double longitude) {
         try {
             SmsManager sms = SmsManager.getDefault();
             String message = "Last Location:\n"+"https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;

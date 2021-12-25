@@ -52,12 +52,8 @@ public class DashboardActivity extends AppCompatActivity {
         btnCallPolice = findViewById(R.id.btnCallPolice);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-//        btnAlert.setOnClickListener(view -> getLastLocation());
+        btnAlert.setOnClickListener(view -> getLastLocation());
 
-        btnAlert.setOnClickListener(view -> {
-            Log.i("User in dashboard", FirebaseUser.getUser().name);
-            Log.i("Guardian in dashboard", FirebaseGuardians.getGuardians().g1);
-        });
         btnCenters.setOnClickListener(view -> startCenterActivity());
 
         btnCallPolice.setOnClickListener(view -> notifyPolice());
@@ -198,10 +194,10 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
-        FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
+//        FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
+//    }
 }

@@ -15,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WomenSafetyApp">
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,7 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:enabled="true" android:name="com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService" />
+
+        <service
+            android:name=".Services.ScreenOnOffBackgroundService"
+            android:enabled="true" />
     </application>
 
 </manifest>

@@ -86,8 +86,14 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.logout_btn) {
-            SignOut.signOutUser(this);
+        switch(item.getItemId()){
+            case R.id.logout_btn:
+                SignOut.signOutUser(this);
+                break;
+            case R.id.profile_btn:
+                Intent intent = new Intent(DashboardActivity.this,ProfileActivity.class);
+                startActivity(intent);
+                break;
         }
         return true;
     }

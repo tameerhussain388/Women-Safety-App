@@ -10,12 +10,20 @@
         <entry key="..\:/Programs/Android/WomenSafetyApp/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
         <entry key="..\:/Programs/Android/WomenSafetyApp/app/src/main/res/layout/activity_sign_up.xml" value="0.22" />
         <entry key="..\:/Programs/Android/WomenSafetyApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/background_gradient.xml" value="0.2203125" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/custom_button.xml" value="0.2203125" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/custom_buttongg.xml" value="0.2203125" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.20625" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.20625" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/ic_main_background.xml" value="0.2203125" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/password.xml" value="0.2203125" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/drawable/smartphone.xml" value="0.2203125" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_dashboard.xml" value="0.20416666666666666" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_emergency_centers.xml" value="0.20416666666666666" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_guardian.xml" value="0.25" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Women-Safety-App/app/src/main/res/menu/options_menu.xml" value="0.20416666666666666" />
       </map>

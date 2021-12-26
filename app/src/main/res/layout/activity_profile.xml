@@ -38,10 +38,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/ivUser"
-        android:layout_width="126dp"
-        android:layout_height="109dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="116dp"
         android:layout_marginEnd="8dp"
@@ -49,7 +50,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/girl_avatar" />
+        app:srcCompat="@drawable/avatar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint"

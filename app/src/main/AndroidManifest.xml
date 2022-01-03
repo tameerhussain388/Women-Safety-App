@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WomenSafetyApp">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".Screens.ProfileActivity"
             android:exported="false" />
 
         <meta-data
@@ -24,22 +24,22 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".EmergencyCentersActivity"
+            android:name=".Screens.EmergencyCentersActivity"
             android:exported="false"
             android:label="@string/title_activity_emergency_centers" />
-        <activity android:name=".GuardianActivity" />
+        <activity android:name=".Screens.GuardianActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Screens.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Screens.SignUpActivity"
             android:exported="true" />
         <activity
-            android:name=".DashboardActivity"
+            android:name=".Screens.DashboardActivity"
             android:exported="true" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".Screens.SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>

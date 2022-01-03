@@ -3,9 +3,8 @@ package com.fyp.womensafetyapp.Broadcasts;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.fyp.womensafetyapp.DashboardActivity;
+import com.fyp.womensafetyapp.Screens.DashboardActivity;
 
 public class ScreenOnOffReceiver extends BroadcastReceiver {
 

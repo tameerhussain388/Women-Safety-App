@@ -3,13 +3,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
+
+import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
-import com.fyp.womensafetyapp.LoginActivity;
+import com.fyp.womensafetyapp.Screens.LoginActivity;
 
 public class SignOut {
     public static void signOutUser(Context context)
     {
-       Firebase_Auth.getInstance().signOut();
+       new AuthPreferences().deleteToken(context);
         Toast.makeText(context, "Logout", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(context, LoginActivity.class);
         (context).startActivity(intent);

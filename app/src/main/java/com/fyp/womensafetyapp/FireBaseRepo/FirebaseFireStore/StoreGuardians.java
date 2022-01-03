@@ -3,6 +3,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
+import com.fyp.womensafetyapp.Models.GuardiansModel;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Arrays;
@@ -12,8 +15,10 @@ import java.util.Map;
 public class StoreGuardians {
 
     private DocumentReference ref;
-    public void storeGuardians(String g1Contact, String g2Contact, String g3Contact,String uid,Context context)
+    LocalDBRepo localDBRepo;
+    public void storeGuardians(GuardiansModel guardian,String uid, Context context)
     {
+        localDBRepo=new LocalDBRepo(context);
         Log.i("UID",uid);
         try {
             ref = FireStore.instance().collection("guardians").document(uid);
@@ -22,9 +27,10 @@ public class StoreGuardians {
                     Toast.makeText(context, "Your guardians already exists", Toast.LENGTH_SHORT).show();
                 } else {
                     Map<String, Object> reg_entry = new HashMap<>();
-                    reg_entry.put("guardians", Arrays.asList(g1Contact,g2Contact,g3Contact));
+                    reg_entry.put("guardians", Arrays.asList(guardian.g1,guardian.g2,guardian.g3));
                     FireStore.instance().collection("guardians").document(uid).set(reg_entry)
                             .addOnSuccessListener(documentReference -> {
+                                localDBRepo.storeGuardians(guardian);
                                 Toast.makeText(context, "Guardians successfully added", Toast.LENGTH_SHORT).show();
                                 ((Activity) context).finish();
                             })

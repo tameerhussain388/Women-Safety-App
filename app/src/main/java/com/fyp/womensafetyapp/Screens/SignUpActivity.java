@@ -14,6 +14,7 @@ import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.fyp.womensafetyapp.R;
+import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -38,10 +39,17 @@ public class SignUpActivity extends AppCompatActivity {
         etContact = findViewById(R.id.etContact);
         etAge = findViewById(R.id.etAge);
         btnRegister.setOnClickListener(view -> {
-            if (validateFields()) {
-                UserModel user=new UserModel(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString());
-                firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),user,SignUpActivity.this);
+            if(NetworkHelper.getInstance().haveNetworkConnection(this))
+            {
+                if (validateFields()) {
+                    UserModel user=new UserModel(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString());
+                    firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),user,SignUpActivity.this);
+                }
+            }else
+            {
+                Toast.makeText(this,"Please connect your device with internet",Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 

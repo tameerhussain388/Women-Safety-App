@@ -12,7 +12,7 @@ public class SignOut {
     public static void signOutUser(Context context)
     {
        new AuthPreferences().deleteToken(context);
-        Toast.makeText(context, "Logout", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Logged out", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(context, LoginActivity.class);
         (context).startActivity(intent);
         ((Activity)context).finish();

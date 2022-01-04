@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.fyp.womensafetyapp.R;
+import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -38,17 +39,23 @@ public class LoginActivity extends AppCompatActivity {
         btnSignIn = findViewById(R.id.btnSignIn);
         requestPermissions();
         btnSignIn.setOnClickListener(view -> {
-            if (validateEmail() && validatePassword()) {
-                if (TextUtils.isEmpty(etEmail.toString())) {
-                    Toast.makeText(getApplicationContext(), "Enter your mail address", Toast.LENGTH_SHORT).show();
-                    return;
+            if(NetworkHelper.getInstance().haveNetworkConnection(this))
+            {
+                if (validateEmail() && validatePassword()) {
+                    if (TextUtils.isEmpty(etEmail.toString())) {
+                        Toast.makeText(getApplicationContext(), "Enter your mail address", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (TextUtils.isEmpty(etPassword.toString())) {
+                        Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    SignIn.singInUser(etEmail.getText().toString(),etPassword.getText().toString(),LoginActivity.this);
                 }
-                if (TextUtils.isEmpty(etPassword.toString())) {
-                    Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                SignIn.singInUser(etEmail.getText().toString(),etPassword.getText().toString(),LoginActivity.this);
+            }else {
+                Toast.makeText(this,"Please connect your device with internet",Toast.LENGTH_SHORT).show();
             }
+
         });
         tvRegister.setOnClickListener(view -> {
             Intent intent = new Intent(this, SignUpActivity.class);
@@ -114,5 +121,7 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setError(null);
             return true;
         }
+
+
     }
 }

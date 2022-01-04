@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 import com.fyp.womensafetyapp.Models.GuardiansModel;
 import com.fyp.womensafetyapp.Models.UserModel;
@@ -23,23 +24,11 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         context=ct;
     }
 
-//    private LocalDB localDBRepo=new LocalDB();
-//    public LocalDBRepo instance()
-//    {
-//        return  localDBRepo;
-//    }
-
-//    public LocalDBRepo()
-//    {
-//
-//    }
-
     @Override
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table "+User_TABLE+ "(_uId integer primary key autoincrement,name,number,age)");
         db.execSQL("create table "+Guardians_TABLE+ "(_id integer primary key autoincrement,g1,g2,g3)");
-//      FOREIGN KEY (uID) REFERENCES "+User_TABLE+" (uId)
     }
 
     @Override
@@ -53,7 +42,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         try {
             myDB=getWritableDatabase();
             myDB.execSQL("insert into "+User_TABLE+" (name,number,age) values('"+user.name+"','"+user.number+"','"+user.age+"');");
-            Toast.makeText(context,"User saved Successfully",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"User saved Successfully in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -62,17 +51,24 @@ public class LocalDBRepo extends SQLiteOpenHelper {
 
     public UserModel fetchUser()
     {
-        UserModel userModel=new UserModel("","","");
-        myDB=getReadableDatabase();
-        Cursor cursor =myDB.rawQuery("select * from "+User_TABLE,null);
-        while (cursor.moveToNext())
+        try {
+            UserModel userModel=new UserModel("","","");
+            myDB=getReadableDatabase();
+            Cursor cursor =myDB.rawQuery("select * from "+User_TABLE,null);
+            while (cursor.moveToNext())
+            {
+                String name=cursor.getString(1);
+                String number=cursor.getString(2);
+                String age=cursor.getString(3);
+                userModel=new UserModel(name,number,age);
+            }
+            return  userModel;
+        }catch (SQLException e)
         {
-            String name=cursor.getString(1);
-            String number=cursor.getString(2);
-            String age=cursor.getString(3);
-            userModel=new UserModel(name,number,age);
+            Log.i("Sql Exception :: ",e.getMessage());
+            return null;
         }
-        return  userModel;
+
     }
 
     public void updateUser(UserModel user)
@@ -102,7 +98,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         try {
             myDB=getWritableDatabase();
             myDB.execSQL("insert into "+Guardians_TABLE+" (g1,g2,g3) values('"+guardian.g1+"','"+guardian.g2+"','"+guardian.g3+"');");
-            Toast.makeText(context,"Guardians saved Successfully",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,"Guardians saved Successfully in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -111,17 +107,24 @@ public class LocalDBRepo extends SQLiteOpenHelper {
 
     public GuardiansModel fetchGuardians()
     {
-        GuardiansModel guardians=new GuardiansModel("","","");
-        myDB=getReadableDatabase();
-        Cursor cursor =myDB.rawQuery("select * from "+Guardians_TABLE,null);
-        while (cursor.moveToNext())
+        try{
+            GuardiansModel guardians=new GuardiansModel("","","");
+            myDB=getReadableDatabase();
+            Cursor cursor =myDB.rawQuery("select * from "+Guardians_TABLE,null);
+            while (cursor.moveToNext())
+            {
+                String g1=cursor.getString(1);
+                String g2=cursor.getString(2);
+                String g3=cursor.getString(3);
+                guardians=new GuardiansModel(g1,g2,g3);
+            }
+            return  guardians;
+        }catch (SQLException e)
         {
-            String g1=cursor.getString(1);
-            String g2=cursor.getString(2);
-            String g3=cursor.getString(3);
-            guardians=new GuardiansModel(g1,g2,g3);
+            Log.i("Sql Exception :: ",e.getMessage());
+            return null;
         }
-        return  guardians;
+
     }
     public void updateGuardians(GuardiansModel guardian)
     {

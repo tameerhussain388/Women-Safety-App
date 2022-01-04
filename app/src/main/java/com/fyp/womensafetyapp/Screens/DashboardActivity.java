@@ -14,15 +14,18 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.SignOut;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
@@ -30,11 +33,14 @@ import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
+import com.fyp.womensafetyapp.utils.LocalDBHelper;
+import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity {
     public Button btnAlert;
@@ -48,6 +54,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataFetcher();
         setContentView(R.layout.activity_dashboard);
         instance = this;
         Intent backgroundService = new Intent(getApplicationContext(), ScreenOnOffBackgroundService.class);
@@ -57,13 +64,9 @@ public class DashboardActivity extends AppCompatActivity {
         btnGuardian = findViewById(R.id.btnGuardian);
         btnCallPolice = findViewById(R.id.btnCallPolice);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         btnAlert.setOnClickListener(view -> getLastLocation());
-
         btnCenters.setOnClickListener(view -> startCenterActivity());
-
         btnCallPolice.setOnClickListener(view -> notifyPolice());
-
         btnGuardian.setOnClickListener(view -> startGuardianActivity());
     }
 
@@ -211,9 +214,54 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
-        FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
+    protected void onResume() {
+        super.onResume();
+        new Handler().postDelayed(() -> {
+            dataSetter();
+        },1000);
+
+    }
+
+    private void dataFetcher() {
+        if(NetworkHelper.getInstance().haveNetworkConnection(this))
+        {
+            FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
+            FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
+        }else
+        {
+            Toast.makeText(this,"no internet connection",Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
+    private void dataSetter()
+    {
+        LocalDBRepo localDBRepo=new LocalDBRepo(this);
+        if(NetworkHelper.getInstance().haveNetworkConnection(this))
+        {
+            if(!LocalDBHelper.getInstance().hasUserData(this))
+            {
+                if(FirebaseUser.getUser()!=null)
+                {
+                    localDBRepo.storeUser(FirebaseUser.getUser());
+                }else{
+                    Toast.makeText(this,"An error occurred during fetching users from network",Toast.LENGTH_LONG).show();
+                }
+
+            } if(!LocalDBHelper.getInstance().hasGuardiansData(this))
+            {
+                if(FirebaseGuardians.getGuardians()!=null)
+                {
+                    localDBRepo.storeGuardians(FirebaseGuardians.getGuardians());
+                }else
+                {
+                    Toast.makeText(this,"you haven't added your guardians yet please add",Toast.LENGTH_LONG).show();
+                }
+            }
+        }else {
+            Toast.makeText(this,"no internet connection",Toast.LENGTH_LONG).show();
+        }
+
     }
 }

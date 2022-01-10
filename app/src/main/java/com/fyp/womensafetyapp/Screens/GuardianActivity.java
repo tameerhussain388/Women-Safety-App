@@ -34,7 +34,7 @@ public class GuardianActivity extends AppCompatActivity {
             String g1=guardian_1.getText().toString();
             String g2=guardian_2.getText().toString();
             String g3=guardian_3.getText().toString();
-            GuardiansModel guardian=new GuardiansModel(g1,g2,g3);
+            GuardiansModel guardian=new GuardiansModel("",g1,g2,g3);
             guardians.storeGuardians(guardian, Firebase_Auth.getInstance().getUid(),this);
         });
     }

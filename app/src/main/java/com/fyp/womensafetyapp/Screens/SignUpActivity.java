@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
             if(NetworkHelper.getInstance().haveNetworkConnection(this))
             {
                 if (validateFields()) {
-                    UserModel user=new UserModel(etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString());
+                    UserModel user=new UserModel("",etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),etEmail.getText().toString());
                     firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),user,SignUpActivity.this);
                 }
             }else

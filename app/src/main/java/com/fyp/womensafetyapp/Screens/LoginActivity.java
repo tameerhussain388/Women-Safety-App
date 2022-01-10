@@ -91,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                         permissionToken.continuePermissionRequest();
                     }
 
-
-
                 }).check();
     }
 

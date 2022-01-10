@@ -28,8 +28,10 @@ public class StoreGuardians {
                 } else {
                     Map<String, Object> reg_entry = new HashMap<>();
                     reg_entry.put("guardians", Arrays.asList(guardian.g1,guardian.g2,guardian.g3));
+                    reg_entry.put("gID", uid);
                     FireStore.instance().collection("guardians").document(uid).set(reg_entry)
                             .addOnSuccessListener(documentReference -> {
+                                guardian.gID=uid;
                                 localDBRepo.storeGuardians(guardian);
                                 Toast.makeText(context, "Guardians successfully added", Toast.LENGTH_SHORT).show();
                                 ((Activity) context).finish();

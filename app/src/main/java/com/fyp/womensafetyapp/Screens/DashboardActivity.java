@@ -218,8 +218,15 @@ public class DashboardActivity extends AppCompatActivity {
         super.onResume();
         new Handler().postDelayed(() -> {
             dataSetter();
-        },1000);
+            Toast.makeText(this,"User :: "+new LocalDBRepo(this).fetchUser().name+"\n"+"email ::"+new LocalDBRepo(this).fetchUser().email,Toast.LENGTH_LONG).show();
+        },5000);
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        dataFetcher();
     }
 
     private void dataFetcher() {

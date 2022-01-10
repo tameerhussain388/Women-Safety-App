@@ -1,12 +1,10 @@
 package com.fyp.womensafetyapp.Screens;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.R;
 
@@ -34,7 +32,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     finish();
                 },SPLASH_SCREEN);
         }
-
     }
 
 //    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {

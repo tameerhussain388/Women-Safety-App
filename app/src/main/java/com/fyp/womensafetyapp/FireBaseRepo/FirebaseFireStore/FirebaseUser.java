@@ -16,7 +16,7 @@ public class FirebaseUser {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot snapshot=task.getResult();
-                        user=new UserModel(snapshot.get("name").toString(),snapshot.get("contact").toString(),snapshot.get("age").toString());
+                        user=new UserModel(snapshot.get("uID").toString(),snapshot.get("name").toString(),snapshot.get("contact").toString(),snapshot.get("age").toString(),snapshot.get("email").toString());
                     } else {
                         Log.i("User ::","fail to get users");
                     }

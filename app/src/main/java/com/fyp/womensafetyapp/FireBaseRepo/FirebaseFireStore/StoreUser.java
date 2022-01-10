@@ -26,13 +26,14 @@ public class StoreUser {
                 reg_entry.put("name",user.name);
                 reg_entry.put("contact", user.number);
                 reg_entry.put("age", user.age);
+                reg_entry.put("email", user.email);
 
                 FireStore.instance().collection("users").document(uid)
                         .set(reg_entry)
                         .addOnSuccessListener(documentReference -> {
-                            localDBRepo.storeUser(user);
-                            Log.d("Success","Data added");
-                            Toast.makeText(context, "User's data successfully added", Toast.LENGTH_SHORT).show();
+//                            localDBRepo.storeUser(user);
+//                            Log.d("Success","Data added");
+//                            Toast.makeText(context, "User's data successfully added", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> Log.d("Error", e.getMessage()));
             }

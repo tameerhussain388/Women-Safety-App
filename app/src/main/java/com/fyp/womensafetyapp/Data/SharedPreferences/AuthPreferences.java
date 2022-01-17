@@ -1,28 +1,29 @@
 package com.fyp.womensafetyapp.Data.SharedPreferences;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 public class AuthPreferences {
 
-    public void storeAuthToken(String token, Context context)
+    public void storeLoginFlag(boolean flag, Context context)
     {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("auth_token",token);
+        editor.putString("login_flag",Boolean.toString(flag));
         editor.apply();
     }
-    public String getAuthToken(Context context)
+    public Boolean getLoginFlag(Context context)
     {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
-        String authToken=sharedPreferences.getString("auth_token","");
-        return authToken;
+        String flag=sharedPreferences.getString("login_flag","false");
+        return Boolean.parseBoolean(flag);
     }
 
-    public boolean deleteToken(Context context)
+    public boolean deleteLogin(Context context)
     {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.remove("auth_token").commit();
+        editor.remove("login_flag").commit();
         return true;
     }
 }

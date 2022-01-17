@@ -9,14 +9,13 @@ import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
-import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Screens.LoginActivity;
 
 public class SignOut {
     public static void signOutUser(Context context)
     {
         LocalDBRepo localDBRepo=new LocalDBRepo(context);
-       new AuthPreferences().deleteToken(context);
+       new AuthPreferences().deleteLogin(context);
        localDBRepo.deleteUser(FirebaseUser.getUser().uID);
        if(FirebaseGuardians.getGuardians()!=null)
        {

@@ -1,10 +1,8 @@
 package com.fyp.womensafetyapp.Screens;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -24,9 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
-import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.SignOut;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
@@ -40,7 +36,6 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class DashboardActivity extends AppCompatActivity {
     public Button btnAlert;
@@ -260,9 +255,11 @@ public class DashboardActivity extends AppCompatActivity {
             {
                 if(FirebaseGuardians.getGuardians()!=null)
                 {
+                    Log.i("guardians if","Guardians if called");
                     localDBRepo.storeGuardians(FirebaseGuardians.getGuardians());
                 }else
                 {
+                    Log.i("guardians else","Guardians else called");
                     Toast.makeText(this,"you haven't added your guardians yet please add",Toast.LENGTH_LONG).show();
                 }
             }

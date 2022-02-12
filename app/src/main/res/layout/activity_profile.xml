@@ -101,7 +101,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
-                android:text="mahira_khan@gmail.com"
+                android:text="none"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.031"
@@ -144,7 +144,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="184dp"
-                android:text="03331234567"
+                android:text="none"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.031"
@@ -186,7 +186,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="184dp"
-                android:text="24"
+                android:text="none"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.031"
@@ -246,7 +246,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="16dp"
-                    android:text="03313061388"
+                    android:text="none"
                     android:textSize="18sp" />
 
             </LinearLayout>
@@ -280,7 +280,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="16dp"
-                    android:text="03322062873"
+                    android:text="none"
                     android:textSize="18sp" />
 
             </LinearLayout>

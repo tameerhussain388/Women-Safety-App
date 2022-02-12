@@ -19,11 +19,10 @@ public class AuthPreferences {
         return Boolean.parseBoolean(flag);
     }
 
-    public boolean deleteLogin(Context context)
+    public void deleteLogin(Context context)
     {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.remove("login_flag").commit();
-        return true;
+        editor.remove("login_flag").apply();
     }
 }

@@ -31,9 +31,6 @@ public class StoreUser {
                 FireStore.instance().collection("users").document(uid)
                         .set(reg_entry)
                         .addOnSuccessListener(documentReference -> {
-//                            localDBRepo.storeUser(user);
-//                            Log.d("Success","Data added");
-//                            Toast.makeText(context, "User's data successfully added", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> Log.d("Error", e.getMessage()));
             }

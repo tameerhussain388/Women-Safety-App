@@ -19,7 +19,7 @@ public class FirebaseGuardians {
             String gID=(String) snapshot.get("gID");
             if(gList!=null&&gID!=null)
             {
-                guardians=new GuardiansModel(gID,gList.get(0),gList.get(1),gList.get(2));
+                guardians=new GuardiansModel(gID,gList.get(0),gList.get(1));
             }
         });
     }

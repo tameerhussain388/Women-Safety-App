@@ -42,7 +42,6 @@ public class EmergencyCentersActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ActivityEmergencyCentersBinding binding = ActivityEmergencyCentersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mapFragment = (SupportMapFragment) getSupportFragmentManager()

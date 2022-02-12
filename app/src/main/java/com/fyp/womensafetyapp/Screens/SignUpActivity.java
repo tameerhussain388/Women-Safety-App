@@ -1,5 +1,9 @@
 package com.fyp.womensafetyapp.Screens;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -11,9 +15,11 @@ import java.util.regex.Pattern;
 
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
+import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.fyp.womensafetyapp.R;
+import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -25,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity {
     public EditText etPassword;
     public EditText etContact;
     public EditText etAge;
-
+    public LoadingDialogBar dialogBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +44,39 @@ public class SignUpActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etContact = findViewById(R.id.etContact);
         etAge = findViewById(R.id.etAge);
+        dialogBar = new LoadingDialogBar(this);
         btnRegister.setOnClickListener(view -> {
             if(NetworkHelper.getInstance().haveNetworkConnection(this))
             {
                 if (validateFields()) {
+                    dialogBar.showDialog("Loading");
                     UserModel user=new UserModel("",etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),etEmail.getText().toString());
-                    firebaseRepo.signUpUser(etEmail.getText().toString(),etPassword.getText().toString(),user,SignUpActivity.this);
+                    signUp(etEmail.getText().toString(),etPassword.getText().toString(),user);
                 }
             }else
             {
                 Toast.makeText(this,"Please connect your device with internet",Toast.LENGTH_SHORT).show();
             }
-
         });
+    }
+
+    public void signUp(String email, String password, UserModel user)
+    {
+        StoreUser storeUser = new StoreUser();
+        Firebase_Auth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    dialogBar.hideDialog();
+                    if (task.isSuccessful()) {
+                        Toast.makeText(SignUpActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                        storeUser.storeUserData(user,Firebase_Auth.getInstance().getUid(),SignUpActivity.this);
+                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(SignUpActivity.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private boolean validateFields() {

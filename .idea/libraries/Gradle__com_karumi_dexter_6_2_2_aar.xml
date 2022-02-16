@@ -4,9 +4,6 @@
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/res" />
       <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6e55b591202fb3f3d43fcdb3e33e41b3/transformed/jetified-dexter-6.2.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.karumi/dexter/6.2.2/9f9fe40514c2154f5a56c112e19d35f5890f9a58/dexter-6.2.2-javadoc.jar!/" />

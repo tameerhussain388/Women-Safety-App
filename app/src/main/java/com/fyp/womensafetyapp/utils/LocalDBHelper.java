@@ -35,13 +35,7 @@ public class LocalDBHelper {
     {
         try {
             GuardiansModel guardian= new LocalDBRepo(context).fetchGuardians();
-            if(!guardian.g1.isEmpty())
-            {
-                return true;
-            }else
-            {
-                return false;
-            }
+            return !guardian.g1.isEmpty();
         }catch (Exception e)
         {
             Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();

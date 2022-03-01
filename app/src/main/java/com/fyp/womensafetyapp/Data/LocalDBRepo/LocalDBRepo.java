@@ -28,7 +28,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table "+User_TABLE+ "(_uId integer primary key autoincrement,uID,name,number,age,email)");
-        db.execSQL("create table "+Guardians_TABLE+ "(_gId integer primary key autoincrement,gID,g1,g2,g3)");
+        db.execSQL("create table "+Guardians_TABLE+ "(_gId integer primary key autoincrement,gID,g1,g2)");
     }
 
     @Override
@@ -64,13 +64,13 @@ public class LocalDBRepo extends SQLiteOpenHelper {
                 String email=cursor.getString(5);
                 userModel=new UserModel(uID,name,number,age,email);
             }
+            cursor.close();
             return  userModel;
         }catch (SQLException e)
         {
             Log.i("Sql Exception :: ",e.getMessage());
             return null;
         }
-
     }
 
     public void updateUser(UserModel user)
@@ -82,7 +82,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         values.put("age",user.age);
         values.put("email",user.email);
         String where=" uID like ?";
-        String whereArg[]={user.uID};
+        String[] whereArg = {user.uID};
         myDB.update(User_TABLE,values,where,whereArg);
         Toast.makeText(context,"User updated",Toast.LENGTH_SHORT).show();
     }
@@ -90,7 +90,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
     public void deleteUser(String uID){
         myDB=getWritableDatabase();
         String where="uID like ?";
-        String whereArg[]={uID};
+        String[] whereArg ={uID};
         int code= myDB.delete(User_TABLE,where,whereArg);
 
         if (code==1)
@@ -100,9 +100,9 @@ public class LocalDBRepo extends SQLiteOpenHelper {
     public void storeGuardians(GuardiansModel guardian)
     {
         try {
-            Log.i("Guardina ID in Store::",guardian.gID);
+            Log.i("Guardian ID in Store::",guardian.gID);
             myDB=getWritableDatabase();
-            myDB.execSQL("insert into "+Guardians_TABLE+" (gID,g1,g2,g3) values('"+guardian.gID+"','"+guardian.g1+"','"+guardian.g2+"','"+guardian.g3+"');");
+            myDB.execSQL("insert into "+Guardians_TABLE+" (gID,g1,g2) values('"+guardian.gID+"','"+guardian.g1+"','"+guardian.g2+"');");
             Toast.makeText(context,"Guardians saved Successfully in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
@@ -113,7 +113,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
     public GuardiansModel fetchGuardians()
     {
         try{
-            GuardiansModel guardians=new GuardiansModel("","","","");
+            GuardiansModel guardians=new GuardiansModel();
             myDB=getReadableDatabase();
             Cursor cursor =myDB.rawQuery("select * from "+Guardians_TABLE,null);
             while (cursor.moveToNext())
@@ -121,16 +121,15 @@ public class LocalDBRepo extends SQLiteOpenHelper {
                 String gID=cursor.getString(1);
                 String g1=cursor.getString(2);
                 String g2=cursor.getString(3);
-                String g3=cursor.getString(4);
-                guardians=new GuardiansModel(gID,g1,g2,g3);
+                guardians=new GuardiansModel(gID,g1,g2);
             }
+            cursor.close();
             return  guardians;
         }catch (SQLException e)
         {
             Log.i("Sql Exception :: ",e.getMessage());
             return null;
         }
-
     }
     public void updateGuardians(GuardiansModel guardian)
     {
@@ -138,9 +137,8 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         ContentValues values=new ContentValues();
         values.put("g1",guardian.g1);
         values.put("g2",guardian.g2);
-        values.put("g3",guardian.g3);
         String where="gID like ?";
-        String whereArg[]={guardian.gID};
+        String[] whereArg ={guardian.gID};
         myDB.update(Guardians_TABLE,values,where,whereArg);
         Toast.makeText(context,"Guardian updated",Toast.LENGTH_SHORT).show();
     }
@@ -148,10 +146,9 @@ public class LocalDBRepo extends SQLiteOpenHelper {
     public void deleteGuardian(String gID){
         myDB=getWritableDatabase();
         String where="gID like ?";
-        String whereArg[]={gID};
+        String[] whereArg = {gID};
         int code= myDB.delete(Guardians_TABLE,where,whereArg);
         if (code==1)
             Toast.makeText(context,"Guardian successfully deleted",Toast.LENGTH_SHORT).show();
     }
-
 }

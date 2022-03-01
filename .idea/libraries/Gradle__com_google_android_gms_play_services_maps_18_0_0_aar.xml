@@ -7,6 +7,7 @@
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.google.android.gms/play-services-maps/18.0.0/b21c7a3eb0f99d941e7d6a1f7ec27846c3b74ae/play-services-maps-18.0.0-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.android.gms/play-services-maps/18.0.0/b21c7a3eb0f99d941e7d6a1f7ec27846c3b74ae/play-services-maps-18.0.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

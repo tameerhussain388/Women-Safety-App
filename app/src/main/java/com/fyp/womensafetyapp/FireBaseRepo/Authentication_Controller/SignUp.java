@@ -11,11 +11,10 @@ import com.fyp.womensafetyapp.Screens.LoginActivity;
 import com.fyp.womensafetyapp.Models.UserModel;
 
 public class SignUp {
-    StoreUser storeUser=new StoreUser();
 
     public void signUpUser(String email, String password, UserModel user, Context context)
     {
-
+        StoreUser storeUser = new StoreUser();
         Firebase_Auth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -38,8 +37,6 @@ public class SignUp {
                                 task.getException().getMessage(),
                                 Toast.LENGTH_LONG)
                                 .show();
-                        // hide the progress bar
-                        // progressBar.setVisibility(View.GONE);
                     }
                 });
     }

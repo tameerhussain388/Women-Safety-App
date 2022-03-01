@@ -7,9 +7,11 @@
     </CLASSES>
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.karumi/dexter/6.2.2/9f9fe40514c2154f5a56c112e19d35f5890f9a58/dexter-6.2.2-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.karumi/dexter/6.2.2/9f9fe40514c2154f5a56c112e19d35f5890f9a58/dexter-6.2.2-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.karumi/dexter/6.2.2/4af0ec48ac103b139d34135f17ccd46b1a25a223/dexter-6.2.2-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.karumi/dexter/6.2.2/4af0ec48ac103b139d34135f17ccd46b1a25a223/dexter-6.2.2-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

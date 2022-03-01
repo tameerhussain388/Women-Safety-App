@@ -1,20 +1,27 @@
 package com.fyp.womensafetyapp.Screens;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.fyp.womensafetyapp.R;
+import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
+import com.google.android.gms.maps.model.Dash;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -28,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     public Button btnSignIn;
     public EditText etEmail;
     public EditText etPassword;
+    public LoadingDialogBar dialogBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
+        dialogBar = new LoadingDialogBar(this);
         requestPermissions();
         btnSignIn.setOnClickListener(view -> {
             if(NetworkHelper.getInstance().haveNetworkConnection(this))
@@ -50,17 +59,34 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    SignIn.singInUser(etEmail.getText().toString(),etPassword.getText().toString(),LoginActivity.this);
+                    dialogBar.showDialog("Loading");
+                    signIn(etEmail.getText().toString().trim(),etPassword.getText().toString());
                 }
             }else {
                 Toast.makeText(this,"Please connect your device with internet",Toast.LENGTH_SHORT).show();
             }
-
         });
         tvRegister.setOnClickListener(view -> {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
+    }
+
+    public void signIn(String email,String password){
+
+        AuthPreferences authPreferences=new AuthPreferences();
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(task -> {
+                    dialogBar.hideDialog();
+                   if(task.isSuccessful()) {
+                       authPreferences.storeLoginFlag(true,LoginActivity.this);
+                       Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                       startActivity(intent);
+                       finish();
+                   }else{
+                       Toast.makeText(LoginActivity.this, "Invalid Email or Password",Toast.LENGTH_SHORT).show();
+                   }
+                });
     }
 
     private void requestLocation() {
@@ -119,7 +145,5 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setError(null);
             return true;
         }
-
-
     }
 }

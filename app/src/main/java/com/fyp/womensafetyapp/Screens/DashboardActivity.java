@@ -29,6 +29,7 @@ import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
+import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.LocalDBHelper;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,11 +38,14 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.DataInput;
+
 public class DashboardActivity extends AppCompatActivity {
     public Button btnAlert;
     public Button btnCenters;
     public Button btnCallPolice;
     public Button btnGuardian;
+    public LoadingDialogBar dialogBar;
     private static DashboardActivity instance;
     private final static int REQUEST_CODE = 123;
     private FusedLocationProviderClient locationProviderClient;
@@ -54,6 +58,7 @@ public class DashboardActivity extends AppCompatActivity {
         instance = this;
         Intent backgroundService = new Intent(getApplicationContext(), ScreenOnOffBackgroundService.class);
         startService(backgroundService);
+        dialogBar = new LoadingDialogBar(this);
         btnAlert = findViewById(R.id.btnAlert);
         btnCenters = findViewById(R.id.btnCenters);
         btnGuardian = findViewById(R.id.btnGuardian);
@@ -83,7 +88,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch(item.getItemId()){
             case R.id.logout_btn:
                 SignOut.signOutUser(this);
@@ -231,11 +235,9 @@ public class DashboardActivity extends AppCompatActivity {
             FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
         }else
         {
-            Toast.makeText(this,"no internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
         }
     }
-
-
 
     private void dataSetter()
     {

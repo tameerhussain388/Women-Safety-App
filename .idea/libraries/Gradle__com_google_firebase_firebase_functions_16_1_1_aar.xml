@@ -4,9 +4,12 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3d16e3f6c73413d698d85044a19c6b9c/transformed/jetified-firebase-functions-16.1.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3d16e3f6c73413d698d85044a19c6b9c/transformed/jetified-firebase-functions-16.1.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3d16e3f6c73413d698d85044a19c6b9c/transformed/jetified-firebase-functions-16.1.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/res" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/res" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/transforms-3/5d3168c2d343f148d4e9ead66e9599f3/transformed/jetified-firebase-functions-16.1.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/30783ba4c7d2034eb282c148e7d4e6fa/transformed/jetified-firebase-functions-16.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/30783ba4c7d2034eb282c148e7d4e6fa/transformed/jetified-firebase-functions-16.1.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/30783ba4c7d2034eb282c148e7d4e6fa/transformed/jetified-firebase-functions-16.1.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

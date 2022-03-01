@@ -4,13 +4,16 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ec7a139218f9fb1bc34f68013d3ad7f5/transformed/jetified-firebase-messaging-17.3.3/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ec7a139218f9fb1bc34f68013d3ad7f5/transformed/jetified-firebase-messaging-17.3.3/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ec7a139218f9fb1bc34f68013d3ad7f5/transformed/jetified-firebase-messaging-17.3.3/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/res" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/bc8dd25d6bcf212bc6a04f128df69fef/transformed/jetified-firebase-messaging-17.3.3/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a56829c015e710536019c5b6bc51395/transformed/jetified-firebase-messaging-17.3.3/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/7a56829c015e710536019c5b6bc51395/transformed/jetified-firebase-messaging-17.3.3/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/7a56829c015e710536019c5b6bc51395/transformed/jetified-firebase-messaging-17.3.3/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-messaging/17.3.3/5a0ecbcab24f4136e8ae8a99f2fd80a3a05a4a68/firebase-messaging-17.3.3-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.google.firebase/firebase-messaging/17.3.3/5a0ecbcab24f4136e8ae8a99f2fd80a3a05a4a68/firebase-messaging-17.3.3-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/modules-2/files-2.1/com.google.firebase/firebase-messaging/17.3.3/5a0ecbcab24f4136e8ae8a99f2fd80a3a05a4a68/firebase-messaging-17.3.3-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

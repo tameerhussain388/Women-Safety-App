@@ -4,9 +4,12 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/3e3fb3853978f1128337c0d7058b6aa7/transformed/jetified-play-services-stats-16.0.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3e3fb3853978f1128337c0d7058b6aa7/transformed/jetified-play-services-stats-16.0.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/3e3fb3853978f1128337c0d7058b6aa7/transformed/jetified-play-services-stats-16.0.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/res" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/res" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/transforms-3/7ce0ed52c7a1a81df82cc98ca1844264/transformed/jetified-play-services-stats-16.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d1909d69b5bc86f1745e207933a4d5a4/transformed/jetified-play-services-stats-16.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d1909d69b5bc86f1745e207933a4d5a4/transformed/jetified-play-services-stats-16.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d1909d69b5bc86f1745e207933a4d5a4/transformed/jetified-play-services-stats-16.0.1/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

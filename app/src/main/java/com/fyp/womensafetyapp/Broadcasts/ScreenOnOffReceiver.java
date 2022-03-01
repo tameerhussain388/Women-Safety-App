@@ -16,7 +16,6 @@ public class ScreenOnOffReceiver extends BroadcastReceiver {
         {
             count++;
             if(count == 2){
-//                Toast.makeText(context,"Testing",Toast.LENGTH_LONG).show();
                 DashboardActivity.getInstance().getLastLocation();
                 count = 0;
             }

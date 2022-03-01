@@ -27,6 +27,7 @@ import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.SignOut;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardians;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
+import com.fyp.womensafetyapp.Models.GuardiansModel;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
@@ -37,6 +38,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.Dash;
 
 import java.io.DataInput;
 
@@ -128,7 +130,8 @@ public class DashboardActivity extends AppCompatActivity {
                         requestNewLocationData();
                     } else {
                         sendMessage(location.getLatitude(), location.getLongitude());
-                        Toast.makeText(getApplicationContext(), " " + location.getLatitude(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Alert Sent",Toast.LENGTH_SHORT).show();
+
                     }
                 });
             } else {
@@ -145,10 +148,14 @@ public class DashboardActivity extends AppCompatActivity {
         try {
             SmsManager sms = SmsManager.getDefault();
             String message = "Last Location:\n"+"https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
-            String phoneNumber = "+923337244110";
-            sms.sendTextMessage(phoneNumber, null, message, null, null);
+            LocalDBRepo repo = new LocalDBRepo(this);
+            GuardiansModel guardian = repo.fetchGuardians();
+            String[] numbers = {guardian.g1,guardian.g2};
+            for(String number: numbers){
+                sms.sendTextMessage(number, null, message, null, null);
+            }
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Alert Sending Failed", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -185,7 +192,6 @@ public class DashboardActivity extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            Toast.makeText(getApplicationContext(), " " + mLastLocation.getLatitude(), Toast.LENGTH_LONG).show();
         }
     };
 
@@ -215,11 +221,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new Handler().postDelayed(() -> {
-            dataSetter();
-            Toast.makeText(this,"User :: "+new LocalDBRepo(this).fetchUser().name+"\n"+"email ::"+new LocalDBRepo(this).fetchUser().email,Toast.LENGTH_LONG).show();
-        },5000);
-
+        new Handler().postDelayed(this::dataSetter,5000);
     }
 
     @Override
@@ -250,7 +252,7 @@ public class DashboardActivity extends AppCompatActivity {
                 {
                     localDBRepo.storeUser(FirebaseUser.getUser());
                 }else{
-                    Toast.makeText(this,"An error occurred during fetching users from network",Toast.LENGTH_LONG).show();
+                    Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
                 }
 
             } if(!LocalDBHelper.getInstance().hasGuardiansData(this))
@@ -262,11 +264,10 @@ public class DashboardActivity extends AppCompatActivity {
                 }else
                 {
                     Log.i("guardians else","Guardians else called");
-                    Toast.makeText(this,"you haven't added your guardians yet please add",Toast.LENGTH_LONG).show();
                 }
             }
         }else {
-            Toast.makeText(this,"no internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
         }
 
     }

@@ -4,13 +4,16 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/5abc77059f0500463ad59edc3ed280a1/transformed/jetified-firebase-firestore-17.1.1/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5abc77059f0500463ad59edc3ed280a1/transformed/jetified-firebase-firestore-17.1.1/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/5abc77059f0500463ad59edc3ed280a1/transformed/jetified-firebase-firestore-17.1.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/AndroidManifest.xml" />
-      <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/res" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/../Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/res" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/transforms-3/0dcc14087fe190b75c66f0335f99167e/transformed/jetified-firebase-firestore-17.1.1/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e270ed8b590725da460c2b23597210db/transformed/jetified-firebase-firestore-17.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e270ed8b590725da460c2b23597210db/transformed/jetified-firebase-firestore-17.1.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e270ed8b590725da460c2b23597210db/transformed/jetified-firebase-firestore-17.1.1/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-firestore/17.1.1/33fad9e05edfa4a8bd503560c6d6352095ba8457/firebase-firestore-17.1.1-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/modules-2/files-2.1/com.google.firebase/firebase-firestore/17.1.1/33fad9e05edfa4a8bd503560c6d6352095ba8457/firebase-firestore-17.1.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Sdk/caches/modules-2/files-2.1/com.google.firebase/firebase-firestore/17.1.1/33fad9e05edfa4a8bd503560c6d6352095ba8457/firebase-firestore-17.1.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

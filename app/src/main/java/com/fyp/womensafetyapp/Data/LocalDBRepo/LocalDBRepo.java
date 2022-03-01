@@ -42,7 +42,6 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         try {
             myDB=getWritableDatabase();
             myDB.execSQL("insert into "+User_TABLE+" (uID,name,number,age,email) values('"+user.uID+"','"+user.name+"','"+user.number+"','"+user.age+"','"+user.email+"');");
-            Toast.makeText(context,"User saved Successfully in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -84,17 +83,13 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         String where=" uID like ?";
         String[] whereArg = {user.uID};
         myDB.update(User_TABLE,values,where,whereArg);
-        Toast.makeText(context,"User updated",Toast.LENGTH_SHORT).show();
     }
 
     public void deleteUser(String uID){
         myDB=getWritableDatabase();
         String where="uID like ?";
         String[] whereArg ={uID};
-        int code= myDB.delete(User_TABLE,where,whereArg);
-
-        if (code==1)
-            Toast.makeText(context,"User successfully deleted",Toast.LENGTH_SHORT).show();
+        myDB.delete(User_TABLE,where,whereArg);
     }
 
     public void storeGuardians(GuardiansModel guardian)
@@ -103,7 +98,6 @@ public class LocalDBRepo extends SQLiteOpenHelper {
             Log.i("Guardian ID in Store::",guardian.gID);
             myDB=getWritableDatabase();
             myDB.execSQL("insert into "+Guardians_TABLE+" (gID,g1,g2) values('"+guardian.gID+"','"+guardian.g1+"','"+guardian.g2+"');");
-            Toast.makeText(context,"Guardians saved Successfully in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -140,15 +134,12 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         String where="gID like ?";
         String[] whereArg ={guardian.gID};
         myDB.update(Guardians_TABLE,values,where,whereArg);
-        Toast.makeText(context,"Guardian updated",Toast.LENGTH_SHORT).show();
     }
 
     public void deleteGuardian(String gID){
         myDB=getWritableDatabase();
         String where="gID like ?";
         String[] whereArg = {gID};
-        int code= myDB.delete(Guardians_TABLE,where,whereArg);
-        if (code==1)
-            Toast.makeText(context,"Guardian successfully deleted",Toast.LENGTH_SHORT).show();
+        myDB.delete(Guardians_TABLE,where,whereArg);
     }
 }

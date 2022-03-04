@@ -32,7 +32,6 @@ public class GuardianActivity extends AppCompatActivity {
         etGuardianOne = findViewById(R.id.guardian_1);
         etGuardianTwo = findViewById(R.id.guardian_2);
         btnAddGuardian = findViewById(R.id.addGuardian);
-        checkIfGuardianAlreadyExists();
         btnAddGuardian.setOnClickListener(view -> {
             if (validateFields()) {
                 addGuardian();
@@ -40,23 +39,23 @@ public class GuardianActivity extends AppCompatActivity {
         });
     }
 
-    private void checkIfGuardianAlreadyExists() {
-
-        LocalDBRepo repo = new LocalDBRepo(GuardianActivity.this);
-        GuardiansModel guardian = repo.fetchGuardians();
-        if (guardian != null) {
-            etGuardianOne.setText(guardian.g1);
-            etGuardianTwo.setText(guardian.g2);
-            etGuardianOne.setFocusable(false);
-            etGuardianTwo.setFocusable(false);
-            etGuardianOne.setTextColor(Color.WHITE);
-            etGuardianTwo.setTextColor(Color.WHITE);
-            etGuardianOne.setEnabled(false);
-            etGuardianTwo.setEnabled(false);
-            btnAddGuardian.setText("Guardians");
-            btnAddGuardian.setEnabled(false);
-        }
-    }
+//    private void checkIfGuardianAlreadyExists() {
+//
+//        LocalDBRepo repo = new LocalDBRepo(GuardianActivity.this);
+//        GuardiansModel guardian = repo.fetchGuardians();
+//        if (guardian != null) {
+//            etGuardianOne.setText(guardian.g1);
+//            etGuardianTwo.setText(guardian.g2);
+//            etGuardianOne.setFocusable(false);
+//            etGuardianTwo.setFocusable(false);
+//            etGuardianOne.setTextColor(Color.WHITE);
+//            etGuardianTwo.setTextColor(Color.WHITE);
+//            etGuardianOne.setEnabled(false);
+//            etGuardianTwo.setEnabled(false);
+//            btnAddGuardian.setText("Guardians");
+//            btnAddGuardian.setEnabled(false);
+//        }
+//    }
 
     private boolean validateFields() {
 

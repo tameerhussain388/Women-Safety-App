@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.fyp.womensafetyapp.Models.CenterModel;
 import com.fyp.womensafetyapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -23,13 +22,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.fyp.womensafetyapp.databinding.ActivityEmergencyCentersBinding;
 import com.google.android.gms.tasks.Task;
-
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,15 +60,13 @@ public class EmergencyCentersActivity extends FragmentActivity {
         Task<Location> task = locationProviderClient.getLastLocation();
         task.addOnSuccessListener(location -> mapFragment.getMapAsync(googleMap -> {
             setCentersMarker(googleMap);
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("Current Position");
-            googleMap.addMarker(markerOptions);
             googleMap.getUiSettings().setZoomControlsEnabled(true);
             googleMap.getUiSettings().setCompassEnabled(true);
             googleMap.getUiSettings().setZoomGesturesEnabled(true);
             googleMap.getUiSettings().setScrollGesturesEnabled(true);
             googleMap.getUiSettings().setRotateGesturesEnabled(true);
             googleMap.setMyLocationEnabled(true);
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
         }));
     }
@@ -95,7 +91,7 @@ public class EmergencyCentersActivity extends FragmentActivity {
 
         List<CenterModel> centersArrayList = new ArrayList<>();
         InputStream stream = getResources().openRawResource(R.raw.centers);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, Charset.forName("UTF-8")));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
         String line = "";
         try{
             reader.readLine();

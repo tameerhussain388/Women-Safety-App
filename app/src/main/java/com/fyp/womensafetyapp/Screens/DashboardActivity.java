@@ -33,6 +33,7 @@ import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.LocalDBHelper;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
+import com.fyp.womensafetyapp.utils.SetterFetcherHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -55,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataFetcher();
+        SetterFetcherHelper.getInstance().dataFetcher(this);
         setContentView(R.layout.activity_dashboard);
         instance = this;
         Intent backgroundService = new Intent(getApplicationContext(), ScreenOnOffBackgroundService.class);
@@ -70,6 +71,13 @@ public class DashboardActivity extends AppCompatActivity {
         btnCenters.setOnClickListener(view -> startCenterActivity());
         btnCallPolice.setOnClickListener(view -> notifyPolice());
         btnGuardian.setOnClickListener(view -> startGuardianActivity());
+        dialogBar.showDialog("Please wait");
+        new Handler().postDelayed(() -> {
+            SetterFetcherHelper.getInstance().dataSetter(this);
+        },3000);
+        new Handler().postDelayed(() -> {
+            dialogBar.hideDialog();
+        },4000);
     }
 
     private void startCenterActivity() {
@@ -218,57 +226,63 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new Handler().postDelayed(this::dataSetter,5000);
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        dialogBar.showDialog("Please wait...");
+//        new Handler().postDelayed(this::dataSetter,3000);
+//        new Handler().postDelayed(() -> {
+//            dialogBar.hideDialog();
+//        },4000);
+//    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        dataFetcher();
-    }
-
-    private void dataFetcher() {
-        if(NetworkHelper.getInstance().haveNetworkConnection(this))
-        {
-            FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
-            FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid());
-        }else
-        {
-            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void dataSetter()
-    {
-        LocalDBRepo localDBRepo=new LocalDBRepo(this);
-        if(NetworkHelper.getInstance().haveNetworkConnection(this))
-        {
-            if(!LocalDBHelper.getInstance().hasUserData(this))
-            {
-                if(FirebaseUser.getUser()!=null)
-                {
-                    localDBRepo.storeUser(FirebaseUser.getUser());
-                }else{
-                    Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
-                }
-
-            } if(!LocalDBHelper.getInstance().hasGuardiansData(this))
-            {
-                if(FirebaseGuardians.getGuardians()!=null)
-                {
-                    Log.i("guardians if","Guardians if called");
-                    localDBRepo.storeGuardians(FirebaseGuardians.getGuardians());
-                }else
-                {
-                    Log.i("guardians else","Guardians else called");
-                }
-            }
-        }else {
-            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
-        }
+//        dataFetcher();
+        SetterFetcherHelper.getInstance().dataFetcher(this);
 
     }
+
+//    private void dataFetcher() {
+//        if(NetworkHelper.getInstance().haveNetworkConnection(this))
+//        {
+//            FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());
+//            FirebaseGuardians.fetchGuardians(Firebase_Auth.getInstance().getUid(),this);
+//        }else
+//        {
+//            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
+//        }
+//    }
+//
+//    private void dataSetter()
+//    {
+//        LocalDBRepo localDBRepo=new LocalDBRepo(this);
+//        if(NetworkHelper.getInstance().haveNetworkConnection(this))
+//        {
+//            if(!LocalDBHelper.getInstance().hasUserData(this))
+//            {
+//                if(FirebaseUser.getUser()!=null)
+//                {
+//                    localDBRepo.storeUser(FirebaseUser.getUser());
+//                }else{
+//                    Toast.makeText(this,"Something went wrong",Toast.LENGTH_LONG).show();
+//                }
+//
+//            } if(!LocalDBHelper.getInstance().hasGuardiansData(this))
+//            {
+//                if(FirebaseGuardians.getGuardians()!=null)
+//                {
+//                    Log.i("guardians if","Guardians if called");
+//                    localDBRepo.storeGuardians(FirebaseGuardians.getGuardians());
+//                }else
+//                {
+//                    Log.i("guardians else","Guardians else called");
+//                }
+//            }
+//        }else {
+//            Toast.makeText(this,"No internet connection",Toast.LENGTH_LONG).show();
+//        }
+//
+//    }
 }

@@ -1,5 +1,8 @@
 package com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore;
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -9,7 +12,7 @@ public class FirebaseUser {
     {
         return  user;
     }
-    public static void fetchUser(String uid)
+    public static void fetchUser(String uid, Context context)
     {
        FireStore.instance()
                 .collection("users").document(uid).get()
@@ -18,12 +21,12 @@ public class FirebaseUser {
                         DocumentSnapshot snapshot=task.getResult();
                         user=new UserModel(snapshot.get("uID").toString(),snapshot.get("name").toString(),snapshot.get("contact").toString(),snapshot.get("age").toString(),snapshot.get("email").toString());
                     } else {
-                        Log.i("User ::","fail to get users");
+                        Toast.makeText(context,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                     }
 
                 })
                 .addOnFailureListener(e -> {
-                    Log.i("failure :: ","Fail to load users");
+                    Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
                 });
     }
 }

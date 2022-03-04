@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
@@ -51,7 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
                 if (validateFields()) {
                     dialogBar.showDialog("Loading");
                     UserModel user=new UserModel("",etName.getText().toString(),etContact.getText().toString(),etAge.getText().toString(),etEmail.getText().toString());
-                    signUp(etEmail.getText().toString(),etPassword.getText().toString(),user);
+                    signUp(etEmail.getText().toString().trim(),etPassword.getText().toString(),user);
+
                 }
             }else
             {
@@ -74,7 +76,7 @@ public class SignUpActivity extends AppCompatActivity {
                         finish();
                     }
                     else {
-                        Toast.makeText(SignUpActivity.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignUpActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -75,18 +75,25 @@ public class LoginActivity extends AppCompatActivity {
     public void signIn(String email,String password){
 
         AuthPreferences authPreferences=new AuthPreferences();
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(task -> {
-                    dialogBar.hideDialog();
-                   if(task.isSuccessful()) {
-                       authPreferences.storeLoginFlag(true,LoginActivity.this);
-                       Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
-                       startActivity(intent);
-                       finish();
-                   }else{
-                       Toast.makeText(LoginActivity.this, "Invalid Email or Password",Toast.LENGTH_SHORT).show();
-                   }
-                });
+        try {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(task -> {
+                        dialogBar.hideDialog();
+                        if(task.isSuccessful()) {
+                            authPreferences.storeLoginFlag(true,LoginActivity.this);
+                            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }catch (Exception e)
+        {
+            Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_SHORT).show();
+
+        }
+
     }
 
     private void requestLocation() {

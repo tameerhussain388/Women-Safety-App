@@ -8,7 +8,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.List;
 
 public class FirebaseGuardians {
-    private static GuardiansModel guardians;
+    public static GuardiansModel guardians;
     public static GuardiansModel getGuardians()
     {
         return guardians;

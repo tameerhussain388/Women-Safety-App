@@ -133,14 +133,19 @@ public class DashboardActivity extends AppCompatActivity {
             // check if location is enabled
             if (isLocationEnabled()) {
 
+                LocalDBRepo repo = new LocalDBRepo(this);
+                GuardiansModel guardian = repo.fetchGuardians();
+                if(guardian == null){
+                    Toast.makeText(getApplicationContext(),"Please add guardians",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 locationProviderClient.getLastLocation().addOnCompleteListener(task -> {
                     Location location = task.getResult();
                     if (location == null) {
                         requestNewLocationData();
                     } else {
-                        sendMessage(location.getLatitude(), location.getLongitude());
+                        sendMessage(guardian,location);
                         Toast.makeText(getApplicationContext(),"Alert Sent",Toast.LENGTH_SHORT).show();
-
                     }
                 });
             } else {
@@ -153,12 +158,15 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    private void sendMessage(double latitude, double longitude) {
+    private void sendMessage(GuardiansModel guardian, Location location) {
         try {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
             SmsManager sms = SmsManager.getDefault();
-            String message = "Last Location:\n"+"https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
+            String message = "Emergency!\nNeed Help\n";
+            message += "Last Known Location:\n";
+            message += "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
             LocalDBRepo repo = new LocalDBRepo(this);
-            GuardiansModel guardian = repo.fetchGuardians();
             String[] numbers = {guardian.g1,guardian.g2};
             for(String number: numbers){
                 sms.sendTextMessage(number, null, message, null, null);

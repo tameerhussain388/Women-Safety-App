@@ -20,6 +20,7 @@ public class SignOut {
         if (FirebaseGuardians.getGuardians() != null) {
             Log.i("Guardian if ", "if called");
             localDBRepo.deleteGuardian(FirebaseGuardians.getGuardians().gID);
+            FirebaseGuardians.guardians = null;
         }
         Toast.makeText(context, "Logged out", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, LoginActivity.class);

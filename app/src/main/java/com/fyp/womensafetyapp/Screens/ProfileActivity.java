@@ -1,6 +1,8 @@
 package com.fyp.womensafetyapp.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
@@ -38,15 +40,17 @@ public class ProfileActivity extends AppCompatActivity {
     private void setUserProfile() {
         LocalDBRepo db = new LocalDBRepo(this);
         UserModel user = db.fetchUser();
-        GuardiansModel guardians = db.fetchGuardians();
+        GuardiansModel guardian = db.fetchGuardians();
         if(!user.name.isEmpty())
         {
             tvName.setText(user.name);
             tvEmail.setText(user.email);
             tvPhone.setText(user.number);
             tvAge.setText(user.age);
-            tvGuardianOne.setText(guardians.g1);
-            tvGuardianTwo.setText(guardians.g2);
+            if(guardian != null){
+                tvGuardianOne.setText(guardian.g1);
+                tvGuardianTwo.setText(guardian.g2);
+            }
         }else {
             dialogBar.showDialog("Loading...");
             SetterFetcherHelper.getInstance().dataFetcher(this);

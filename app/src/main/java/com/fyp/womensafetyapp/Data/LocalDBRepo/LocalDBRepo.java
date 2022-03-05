@@ -108,7 +108,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
 
     public GuardiansModel fetchGuardians()
     {
-        GuardiansModel guardians=new GuardiansModel("","","");
+        GuardiansModel guardian = null;
         try{
             myDB=getReadableDatabase();
             Cursor cursor =myDB.rawQuery("select * from "+Guardians_TABLE,null);
@@ -117,10 +117,10 @@ public class LocalDBRepo extends SQLiteOpenHelper {
                 String gID=cursor.getString(1);
                 String g1=cursor.getString(2);
                 String g2=cursor.getString(3);
-                guardians=new GuardiansModel(gID,g1,g2);
+                guardian =new GuardiansModel(gID,g1,g2);
             }
             cursor.close();
-            return  guardians;
+            return guardian;
         }catch (SQLException e)
         {
             Log.i("Sql Exception :: ",e.getMessage());

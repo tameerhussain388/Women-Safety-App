@@ -72,6 +72,7 @@ public class DashboardActivity extends AppCompatActivity {
         btnCallPolice.setOnClickListener(view -> notifyPolice());
         btnGuardian.setOnClickListener(view -> startGuardianActivity());
         dialogBar.showDialog("Please wait");
+
         new Handler().postDelayed(() -> {
             SetterFetcherHelper.getInstance().dataSetter(this);
         },3000);

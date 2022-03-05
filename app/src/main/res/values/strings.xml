@@ -16,9 +16,9 @@
     <string name="guardians">Guardians</string>
     <string name="emergency_centers">Emergency Centers</string>
     <string name="call_police">Call Police</string>
-    <string name="add_guardian">Add Guardians</string>
+    <string name="add">Add</string>
+    <string name="update">Update</string>
     <string name="guardian_1">Guardian 1</string>
     <string name="guardian_2">Guardian 2</string>
-    <string name="guardian_3">Guardian 3</string>
     <string name="title_activity_emergency_centers">EmergencyCentersActivity</string>
 </resources>

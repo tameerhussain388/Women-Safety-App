@@ -49,7 +49,7 @@
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/phone"
             android:drawablePadding="12dp"
-            android:hint="@string/guardian_1"
+            android:hint="03103455100"
             android:importantForAutofill="yes"
             android:inputType="phone"
             android:padding="10dp"
@@ -67,7 +67,7 @@
             android:background="@drawable/custom_input"
             android:drawableStart="@drawable/phone"
             android:drawablePadding="12dp"
-            android:hint="@string/guardian_2"
+            android:hint="03103455100"
             android:importantForAutofill="yes"
             android:inputType="phone"
             android:padding="10dp"
@@ -76,7 +76,7 @@
             app:layout_constraintTop_toBottomOf="@+id/guardian_1" />
 
         <Button
-            android:id="@+id/addGuardian"
+            android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
@@ -85,7 +85,7 @@
             android:backgroundTint="@color/pink_700"
             android:padding="12dp"
             android:textColor="@color/white"
-            android:text="@string/add_guardian"
+            android:text="@string/add"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guardian_2" />

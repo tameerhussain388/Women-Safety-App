@@ -38,7 +38,6 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        SignUp firebaseRepo=new SignUp();
         btnRegister = findViewById(R.id.btnSignUp);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);

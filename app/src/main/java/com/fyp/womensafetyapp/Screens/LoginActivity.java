@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
-
     }
 
     private void requestLocation() {
@@ -106,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void requestPermissions(){
+
         Dexter.withContext(this)
                 .withPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS,Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION)

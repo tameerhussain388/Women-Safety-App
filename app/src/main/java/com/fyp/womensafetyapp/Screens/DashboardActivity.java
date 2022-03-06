@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,8 +60,7 @@ public class DashboardActivity extends AppCompatActivity {
         SetterFetcherHelper.getInstance().dataFetcher(this);
         setContentView(R.layout.activity_dashboard);
         instance = this;
-        Intent backgroundService = new Intent(getApplicationContext(), ScreenOnOffBackgroundService.class);
-        startService(backgroundService);
+        registerService();
         dialogBar = new LoadingDialogBar(this);
         btnAlert = findViewById(R.id.btnAlert);
         btnCenters = findViewById(R.id.btnCenters);
@@ -126,6 +126,23 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    public void registerService(){
+        if(!foregroundServiceRunning()){
+            Intent backgroundService = new Intent(this, ScreenOnOffBackgroundService.class);
+            ContextCompat.startForegroundService(this,backgroundService);
+        }
+    }
+
+    public boolean foregroundServiceRunning(){
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
+            if(ScreenOnOffBackgroundService.class.getName().equals(service.service.getClassName())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @SuppressLint("MissingPermission")
     public void getLastLocation() {
         // check if permissions are given
@@ -145,7 +162,6 @@ public class DashboardActivity extends AppCompatActivity {
                         requestNewLocationData();
                     } else {
                         sendMessage(guardian,location);
-                        Toast.makeText(getApplicationContext(),"Alert Sent",Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -166,11 +182,11 @@ public class DashboardActivity extends AppCompatActivity {
             String message = "Emergency!\nNeed Help\n";
             message += "Last Known Location:\n";
             message += "https://www.google.com/maps/search/?api=1&query=" + latitude + "," + longitude;
-            LocalDBRepo repo = new LocalDBRepo(this);
             String[] numbers = {guardian.g1,guardian.g2};
             for(String number: numbers){
                 sms.sendTextMessage(number, null, message, null, null);
             }
+            Toast.makeText(getApplicationContext(),"Alert Sent",Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Alert Sending Failed", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -234,7 +250,6 @@ public class DashboardActivity extends AppCompatActivity {
             }
         }
     }
-
 //    @Override
 //    protected void onResume() {
 //        super.onResume();
@@ -253,7 +268,13 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
-//    private void dataFetcher() {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(new Intent(this,ScreenOnOffBackgroundService.class));
+    }
+
+    //    private void dataFetcher() {
 //        if(NetworkHelper.getInstance().haveNetworkConnection(this))
 //        {
 //            FirebaseUser.fetchUser(Firebase_Auth.getInstance().getUid());

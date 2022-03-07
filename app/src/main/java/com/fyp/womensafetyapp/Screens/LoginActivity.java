@@ -1,26 +1,21 @@
 package com.fyp.womensafetyapp.Screens;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
-import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
-import com.google.android.gms.maps.model.Dash;
 import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -35,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     public Button btnSignIn;
     public EditText etEmail;
     public EditText etPassword;
+    public TextView tvForgetPass;
     public LoadingDialogBar dialogBar;
 
     @Override
@@ -45,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
+        tvForgetPass=findViewById(R.id.forget_pass);
         dialogBar = new LoadingDialogBar(this);
         requestPermissions();
         btnSignIn.setOnClickListener(view -> {
@@ -70,6 +67,10 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SignUpActivity.class);
             startActivity(intent);
         });
+
+//        tvForgetPass.setOnClickListener(view -> {
+//            new ForgetPass().forgetPass("niaz.baig11@gmail.com",this);
+//        });
     }
 
     public void signIn(String email,String password){

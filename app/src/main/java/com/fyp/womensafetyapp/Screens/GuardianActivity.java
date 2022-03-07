@@ -54,7 +54,6 @@ public class GuardianActivity extends AppCompatActivity {
             guardianId = guardian.gID;
             etGuardianOne.setText(guardian.g1);
             etGuardianTwo.setText(guardian.g2);
-            Toast.makeText(getApplicationContext(),guardian.g1,Toast.LENGTH_LONG).show();
             btnSave.setText(R.string.update);
         }else{
             isExist = false;
@@ -70,14 +69,16 @@ public class GuardianActivity extends AppCompatActivity {
     }
 
     private void addGuardian(String g1,String g2) {
+//      Add guardians in local db as well as in firestore
         GuardiansModel guardian = new GuardiansModel("", g1, g2);
         guardianStore.storeGuardians(guardian, Firebase_Auth.getInstance().getUid(), this);
     }
 
     private void updateGuardian(String g1,String g2) {
-//        Update in local db as well as firestore
+//      Updated guardians in local db as well as in firestore.
         GuardiansModel guardian = new GuardiansModel(guardianId, g1, g2);
-        Toast.makeText(getApplicationContext(),guardianId+ " updated",Toast.LENGTH_LONG).show();
+        guardianStore.updateGuardians(guardian, Firebase_Auth.getInstance().getUid(), this);
+
     }
 
     private boolean validateGuardianOne() {

@@ -4,10 +4,16 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.GuardiansModel;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,9 +23,10 @@ public class StoreGuardians {
 
     private DocumentReference ref;
     LocalDBRepo localDBRepo;
+    LoadingDialogBar dialogBar;
     public void storeGuardians(GuardiansModel guardian,String uid, Context context)
     {
-        LoadingDialogBar dialogBar = new LoadingDialogBar(context);
+        dialogBar=new LoadingDialogBar(context);
         dialogBar.showDialog("Loading");
         localDBRepo=new LocalDBRepo(context);
         Log.i("UID",uid);
@@ -27,9 +34,7 @@ public class StoreGuardians {
             ref = FireStore.instance().collection("guardians").document(uid);
             ref.get().addOnSuccessListener(documentSnapshot -> {
                 dialogBar.hideDialog();
-                if (documentSnapshot.exists()) {
-                    Toast.makeText(context, "Your guardians already exists", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!documentSnapshot.exists()) {
                     Map<String, Object> reg_entry = new HashMap<>();
                     reg_entry.put("guardians", Arrays.asList(guardian.g1,guardian.g2));
                     reg_entry.put("gID", uid);
@@ -51,5 +56,34 @@ public class StoreGuardians {
         {
             Log.i("Exception e:: ",e.getMessage());
         }
+    }
+
+    public void updateGuardians(GuardiansModel guardian,String uid,Context context)
+    {
+        dialogBar=new LoadingDialogBar(context);
+        dialogBar.showDialog("Loading");
+        Map<String, Object> reg_entry = new HashMap<>();
+        reg_entry.put("guardians", Arrays.asList(guardian.g1,guardian.g2));
+        reg_entry.put("gID", uid);
+        FirebaseFirestore.getInstance()
+                .collection("guardians")
+                .document(Firebase_Auth.getInstance().getUid())
+                .set(reg_entry)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        new LocalDBRepo(context).updateGuardians(guardian);
+                        dialogBar.hideDialog();
+                        Toast.makeText(context,"Guardians updated successfully",Toast.LENGTH_SHORT).show();
+                        ((Activity) context).finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        dialogBar.hideDialog();
+                        Toast.makeText(context,"Oops!! Something went wrong try again",Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

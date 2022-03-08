@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
@@ -12,6 +13,8 @@ import com.fyp.womensafetyapp.Models.GuardiansModel;
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.utils.LocalDBHelper;
+import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.fyp.womensafetyapp.utils.SetterFetcherHelper;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -39,36 +42,68 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setUserProfile() {
         LocalDBRepo db = new LocalDBRepo(this);
-        UserModel user = db.fetchUser();
         GuardiansModel guardian = db.fetchGuardians();
-        if(!user.name.isEmpty())
+        if(LocalDBHelper.getInstance().hasUserData(this))
         {
+            UserModel user = db.fetchUser();
             tvName.setText(user.name);
             tvEmail.setText(user.email);
             tvPhone.setText(user.number);
             tvAge.setText(user.age);
-            if(guardian != null){
+            if(guardian.g1!=null&&!guardian.g1.isEmpty()){
                 tvGuardianOne.setText(guardian.g1);
                 tvGuardianTwo.setText(guardian.g2);
             }
-        }else {
+        }else
+        {
             dialogBar.showDialog("Loading...");
             SetterFetcherHelper.getInstance().dataFetcher(this);
             new Handler().postDelayed(() -> {
                 SetterFetcherHelper.getInstance().dataSetter(this);
-            },3000);
-            new Handler().postDelayed(() -> {
-                dialogBar.hideDialog();
-                UserModel newUser = db.fetchUser();
-                GuardiansModel newGuardians = db.fetchGuardians();
-                tvName.setText(newUser.name);
-                tvEmail.setText(newUser.email);
-                tvPhone.setText(newUser.number);
-                tvAge.setText(newUser.age);
-                tvGuardianOne.setText(newGuardians.g1);
-                tvGuardianTwo.setText(newGuardians.g2);
             },4000);
+            new Handler().postDelayed(() -> {
+                UserModel user = db.fetchUser();
+                tvName.setText(user.name);
+                tvEmail.setText(user.email);
+                tvPhone.setText(user.number);
+                tvAge.setText(user.age);
+                if(guardian.g1!=null&&!guardian.g1.isEmpty()){
+                    tvGuardianOne.setText(guardian.g1);
+                    tvGuardianTwo.setText(guardian.g2);
+                }
+                dialogBar.hideDialog();
+            },5000);
         }
+
+
+//        if(!user.name.isEmpty())
+//        {
+//            tvName.setText(user.name);
+//            tvEmail.setText(user.email);
+//            tvPhone.setText(user.number);
+//            tvAge.setText(user.age);
+//            if(guardian != null){
+//                tvGuardianOne.setText(guardian.g1);
+//                tvGuardianTwo.setText(guardian.g2);
+//            }
+//        }else {
+//            dialogBar.showDialog("Loading...");
+//            SetterFetcherHelper.getInstance().dataFetcher(this);
+//            new Handler().postDelayed(() -> {
+//                SetterFetcherHelper.getInstance().dataSetter(this);
+//            },3000);
+//            new Handler().postDelayed(() -> {
+//                dialogBar.hideDialog();
+//                UserModel newUser = db.fetchUser();
+//                GuardiansModel newGuardians = db.fetchGuardians();
+//                tvName.setText(newUser.name);
+//                tvEmail.setText(newUser.email);
+//                tvPhone.setText(newUser.number);
+//                tvAge.setText(newUser.age);
+//                tvGuardianOne.setText(newGuardians.g1);
+//                tvGuardianTwo.setText(newGuardians.g2);
+//            },4000);
+//        }
 
     }
 }

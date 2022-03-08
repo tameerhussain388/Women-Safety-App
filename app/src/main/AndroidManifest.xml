@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
@@ -17,6 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WomenSafetyApp">
+        <activity android:name=".Screens.ForgetPassword"></activity>
         <activity
             android:name=".Screens.ProfileActivity"
             android:exported="false" />
@@ -55,7 +56,7 @@
             android:name=".Services.ScreenOnOffBackgroundService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="true"/>
+            android:stopWithTask="true" />
     </application>
 
 </manifest>

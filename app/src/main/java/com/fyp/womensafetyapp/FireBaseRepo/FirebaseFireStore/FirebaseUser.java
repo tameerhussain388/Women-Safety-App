@@ -6,6 +6,8 @@ import android.widget.Toast;
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.util.Objects;
+
 public class FirebaseUser {
     private static UserModel user;
     public static UserModel getUser()
@@ -19,9 +21,9 @@ public class FirebaseUser {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot snapshot=task.getResult();
-                        user=new UserModel(snapshot.get("uID").toString(),snapshot.get("name").toString(),snapshot.get("contact").toString(),snapshot.get("age").toString(),snapshot.get("email").toString());
+                        user=new UserModel(Objects.requireNonNull(snapshot.get("uID")).toString(), Objects.requireNonNull(snapshot.get("contact")).toString(), Objects.requireNonNull(snapshot.get("name")).toString(), Objects.requireNonNull(snapshot.get("age")).toString(), Objects.requireNonNull(snapshot.get("email")).toString());
                     } else {
-                        Toast.makeText(context,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"OOPS! Something went wrong",Toast.LENGTH_SHORT).show();
                     }
 
                 })

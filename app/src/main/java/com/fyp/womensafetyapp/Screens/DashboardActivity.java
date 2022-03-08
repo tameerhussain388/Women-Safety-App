@@ -75,10 +75,10 @@ public class DashboardActivity extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
             SetterFetcherHelper.getInstance().dataSetter(this);
-        },3000);
+        },5000);
         new Handler().postDelayed(() -> {
             dialogBar.hideDialog();
-        },4000);
+        },6000);
     }
 
     private void startCenterActivity() {

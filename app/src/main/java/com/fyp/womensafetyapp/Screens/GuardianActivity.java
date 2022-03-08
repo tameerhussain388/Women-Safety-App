@@ -49,7 +49,7 @@ public class GuardianActivity extends AppCompatActivity {
     private void checkIfGuardianExists() {
         LocalDBRepo repo = new LocalDBRepo(this);
         GuardiansModel guardian = repo.fetchGuardians();
-        if(guardian != null){
+        if(guardian != null&&!guardian.g1.isEmpty()&&!guardian.g2.isEmpty()){
             isExist = true;
             guardianId = guardian.gID;
             etGuardianOne.setText(guardian.g1);

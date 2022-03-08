@@ -16,7 +16,6 @@ public class SetterFetcherHelper {
     {
         return instance;
     }
-
     public void dataSetter(Context context)
     {
         LocalDBRepo localDBRepo=new LocalDBRepo(context);
@@ -29,7 +28,7 @@ public class SetterFetcherHelper {
                     localDBRepo.storeUser(FirebaseUser.getUser());
 
                 }else{
-                    Toast.makeText(context,"Something went wrong",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,"Something went wrong getting user from firebase",Toast.LENGTH_LONG).show();
                 }
 
             } if(!LocalDBHelper.getInstance().hasGuardiansData(context))

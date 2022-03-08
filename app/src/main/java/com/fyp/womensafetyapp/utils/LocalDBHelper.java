@@ -1,5 +1,6 @@
 package com.fyp.womensafetyapp.utils;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.Models.GuardiansModel;
@@ -17,13 +18,7 @@ public class LocalDBHelper {
     {
         try {
             UserModel user= new LocalDBRepo(context).fetchUser();
-            if(!user.name.isEmpty())
-            {
-                return true;
-            }else
-            {
-                return false;
-            }
+            return user.name != null && !user.name.isEmpty();
         }catch (Exception e)
         {
             Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -35,7 +30,7 @@ public class LocalDBHelper {
     {
         try {
             GuardiansModel guardian= new LocalDBRepo(context).fetchGuardians();
-            return !guardian.g1.isEmpty();
+            return guardian.g1 != null&&!guardian.g1.isEmpty();
         }catch (Exception e)
         {
             Toast.makeText(context,""+e.getMessage(),Toast.LENGTH_SHORT).show();

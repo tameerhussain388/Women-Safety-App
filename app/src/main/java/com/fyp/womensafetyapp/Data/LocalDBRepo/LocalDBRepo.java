@@ -42,7 +42,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
         try {
             myDB=getWritableDatabase();
             myDB.execSQL("insert into "+User_TABLE+" (uID,name,number,age,email) values('"+user.uID+"','"+user.name+"','"+user.number+"','"+user.age+"','"+user.email+"');");
-            Toast.makeText(context,"user saved in local db",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context,"user saved in local db",Toast.LENGTH_SHORT).show();
         }catch (SQLException e)
         {
             Toast.makeText(context,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -51,8 +51,9 @@ public class LocalDBRepo extends SQLiteOpenHelper {
 
     public UserModel fetchUser()
     {
+        UserModel userModel=new UserModel("","","","","");
         try {
-            UserModel userModel=new UserModel("","","","","");
+
             myDB=getReadableDatabase();
             Cursor cursor =myDB.rawQuery("select * from "+User_TABLE,null);
             while (cursor.moveToNext())
@@ -108,7 +109,7 @@ public class LocalDBRepo extends SQLiteOpenHelper {
 
     public GuardiansModel fetchGuardians()
     {
-        GuardiansModel guardian = null;
+        GuardiansModel guardian = new GuardiansModel("","","");
         try{
             myDB=getReadableDatabase();
             Cursor cursor =myDB.rawQuery("select * from "+Guardians_TABLE,null);

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
+import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
@@ -23,6 +24,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import java.util.List;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -68,9 +70,10 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        tvForgetPass.setOnClickListener(view -> {
-//            new ForgetPass().forgetPass("niaz.baig11@gmail.com",this);
-//        });
+        tvForgetPass.setOnClickListener(view -> {
+            Intent intent=new Intent(this, ForgetPassword.class);
+            startActivity(intent);
+        });
     }
 
     public void signIn(String email,String password){
@@ -81,14 +84,21 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         dialogBar.hideDialog();
                         if(task.isSuccessful()) {
-                            authPreferences.storeLoginFlag(true,LoginActivity.this);
-                            Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
-                            startActivity(intent);
-                            finish();
+                          if(Objects.requireNonNull(Firebase_Auth.getInstance().getCurrentUser()).isEmailVerified()){
+                                authPreferences.storeLoginFlag(true,LoginActivity.this);
+                                Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }else
+                          {
+                              Toast.makeText(LoginActivity.this, "Please verify your email first",Toast.LENGTH_LONG).show();
+                          }
+
                         }else{
-                            Toast.makeText(LoginActivity.this, task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "OOPS! Something went wrong",Toast.LENGTH_SHORT).show();
                         }
-                    });
+                    }).addOnFailureListener(task ->Toast.makeText(LoginActivity.this, task.getMessage(),Toast.LENGTH_SHORT).show()
+);
         }catch (Exception e)
         {
             Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_SHORT).show();

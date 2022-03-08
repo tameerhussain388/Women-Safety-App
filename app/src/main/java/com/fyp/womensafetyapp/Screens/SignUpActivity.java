@@ -1,28 +1,20 @@
 package com.fyp.womensafetyapp.Screens;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.util.Objects;
 import java.util.regex.Pattern;
-
-import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
-import com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller.*;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.UserModel;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -68,16 +60,43 @@ public class SignUpActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     dialogBar.hideDialog();
                     if (task.isSuccessful()) {
-                        Toast.makeText(SignUpActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-                        storeUser.storeUserData(user,Firebase_Auth.getInstance().getUid(),SignUpActivity.this);
-                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
+                        Objects.requireNonNull(Firebase_Auth.getInstance().getCurrentUser()).sendEmailVerification().addOnCompleteListener(result -> {
+                            if(result.isSuccessful())
+                            {
+                                Toast.makeText(this,
+                                       "A verification email has been sent to your account",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+                                storeUser.storeUserData(user,Firebase_Auth.getInstance().getUid(),this);
+                                // if the user created intent to login activity
+                                Intent intent = new Intent(this, LoginActivity.class);
+                                (this).startActivity(intent);
+                                ((Activity)this).finish();
+                            }else
+                            {
+                                // Verification sending failed
+                                Toast.makeText(
+                                        this,
+                                        "Fail to send verification email",
+                                        Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                        }).addOnFailureListener(result ->Toast.makeText(
+                                this,
+                                result.getMessage(),
+                                Toast.LENGTH_SHORT)
+                                .show() );
+//                        Toast.makeText(SignUpActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+//                        storeUser.storeUserData(user,Firebase_Auth.getInstance().getUid(),SignUpActivity.this);
+//                        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+//                        startActivity(intent);
+//                        finish();
                     }
-                    else {
-                        Toast.makeText(SignUpActivity.this, Objects.requireNonNull(task.getException()).getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }).addOnFailureListener(runnable ->Toast.makeText(
+                this,
+                runnable.getMessage(),
+                Toast.LENGTH_SHORT)
+                .show() ) ;
     }
 
     private boolean validateFields() {

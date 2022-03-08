@@ -31,6 +31,7 @@ public class StoreUser {
                 FireStore.instance().collection("users").document(uid)
                         .set(reg_entry)
                         .addOnSuccessListener(documentReference -> {
+
                         })
                         .addOnFailureListener(e -> Log.d("Error", e.getMessage()));
             }

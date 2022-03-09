@@ -9,6 +9,7 @@ import com.fyp.womensafetyapp.R;
 
 public class ForgetPassword extends AppCompatActivity {
     Button sendPass;
+    Button backButton;
     EditText emailText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +17,14 @@ public class ForgetPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forget_password);
         sendPass=findViewById(R.id.sendPass);
         emailText=findViewById(R.id.etEmail);
+        backButton=findViewById(R.id.back);
         sendPass.setOnClickListener(view -> {
             if(validateEmail())
             {
                 new ForgetPass().forgetPass(emailText.getText().toString().trim(), this);
             }
         });
+        backButton.setOnClickListener(view -> finish());
     }
 
     private boolean validateEmail() {

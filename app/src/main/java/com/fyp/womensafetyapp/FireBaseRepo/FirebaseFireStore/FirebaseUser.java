@@ -21,7 +21,7 @@ public class FirebaseUser {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         DocumentSnapshot snapshot=task.getResult();
-                        user=new UserModel(Objects.requireNonNull(snapshot.get("uID")).toString(), Objects.requireNonNull(snapshot.get("contact")).toString(), Objects.requireNonNull(snapshot.get("name")).toString(), Objects.requireNonNull(snapshot.get("age")).toString(), Objects.requireNonNull(snapshot.get("email")).toString());
+                        user=new UserModel(Objects.requireNonNull(snapshot.get("uID")).toString(), Objects.requireNonNull(snapshot.get("name")).toString(),Objects.requireNonNull(snapshot.get("contact")).toString(), Objects.requireNonNull(snapshot.get("age")).toString(), Objects.requireNonNull(snapshot.get("email")).toString());
                     } else {
                         Toast.makeText(context,"OOPS! Something went wrong",Toast.LENGTH_SHORT).show();
                     }

@@ -1,109 +1,72 @@
 package com.fyp.womensafetyapp.Screens;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.TextView;
-
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
-import com.fyp.womensafetyapp.Models.GuardiansModel;
-import com.fyp.womensafetyapp.Models.UserModel;
+import com.fyp.womensafetyapp.Models.Guardian;
+import com.fyp.womensafetyapp.Models.User;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.LocalDBHelper;
-import com.fyp.womensafetyapp.utils.NetworkHelper;
 import com.fyp.womensafetyapp.utils.SetterFetcherHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    public TextView tvName;
-    public TextView tvEmail;
-    public TextView tvPhone;
-    public TextView tvAge;
-    public TextView tvGuardianOne;
-    public TextView tvGuardianTwo;
-    LoadingDialogBar dialogBar;
+    private TextView tvAge;
+    private TextView tvName;
+    private TextView tvEmail;
+    private TextView tvPhone;
+    private TextView tvGuardianOne;
+    private TextView tvGuardianTwo;
+    private LoadingDialogBar dialogBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         dialogBar=new LoadingDialogBar(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        tvName = findViewById(R.id.tvProfileName);
-        tvEmail = findViewById(R.id.tvProfileEmail);
-        tvPhone = findViewById(R.id.tvProfilePhone);
+
         tvAge = findViewById(R.id.tvProfileAge);
+        tvName = findViewById(R.id.tvProfileName);
+        tvPhone = findViewById(R.id.tvProfilePhone);
+        tvEmail = findViewById(R.id.tvProfileEmail);
         tvGuardianOne = findViewById(R.id.tvProfileGuardianOne);
         tvGuardianTwo = findViewById(R.id.tvProfileGuardianTwo);
-        setUserProfile();
+
+        showProfile();
     }
 
-    private void setUserProfile() {
-        LocalDBRepo db = new LocalDBRepo(this);
-        GuardiansModel guardian = db.fetchGuardians();
-        if(LocalDBHelper.getInstance().hasUserData(this))
-        {
-            UserModel user = db.fetchUser();
-            tvName.setText(user.name);
-            tvEmail.setText(user.email);
-            tvPhone.setText(user.number);
-            tvAge.setText(user.age);
-            if(guardian.g1!=null&&!guardian.g1.isEmpty()){
-                tvGuardianOne.setText(guardian.g1);
-                tvGuardianTwo.setText(guardian.g2);
-            }
-        }else
-        {
+    private void showProfile() {
+        if(LocalDBHelper.getInstance().hasUserData(this)) {
+            setProfile();
+        }else {
             dialogBar.showDialog("Loading...");
             SetterFetcherHelper.getInstance().dataFetcher(this);
+            new Handler().postDelayed(() -> SetterFetcherHelper.getInstance().dataSetter(this),4000);
             new Handler().postDelayed(() -> {
-                SetterFetcherHelper.getInstance().dataSetter(this);
-            },4000);
-            new Handler().postDelayed(() -> {
-                UserModel user = db.fetchUser();
-                tvName.setText(user.name);
-                tvEmail.setText(user.email);
-                tvPhone.setText(user.number);
-                tvAge.setText(user.age);
-                if(guardian.g1!=null&&!guardian.g1.isEmpty()){
-                    tvGuardianOne.setText(guardian.g1);
-                    tvGuardianTwo.setText(guardian.g2);
-                }
+                setProfile();
                 dialogBar.hideDialog();
             },5000);
         }
+    }
 
+    public void setProfile(){
 
-//        if(!user.name.isEmpty())
-//        {
-//            tvName.setText(user.name);
-//            tvEmail.setText(user.email);
-//            tvPhone.setText(user.number);
-//            tvAge.setText(user.age);
-//            if(guardian != null){
-//                tvGuardianOne.setText(guardian.g1);
-//                tvGuardianTwo.setText(guardian.g2);
-//            }
-//        }else {
-//            dialogBar.showDialog("Loading...");
-//            SetterFetcherHelper.getInstance().dataFetcher(this);
-//            new Handler().postDelayed(() -> {
-//                SetterFetcherHelper.getInstance().dataSetter(this);
-//            },3000);
-//            new Handler().postDelayed(() -> {
-//                dialogBar.hideDialog();
-//                UserModel newUser = db.fetchUser();
-//                GuardiansModel newGuardians = db.fetchGuardians();
-//                tvName.setText(newUser.name);
-//                tvEmail.setText(newUser.email);
-//                tvPhone.setText(newUser.number);
-//                tvAge.setText(newUser.age);
-//                tvGuardianOne.setText(newGuardians.g1);
-//                tvGuardianTwo.setText(newGuardians.g2);
-//            },4000);
-//        }
-
+        LocalDBRepo db = new LocalDBRepo(this);
+        User user = db.fetchUser();
+        if(user != null){
+            tvName.setText(user.getName());
+            tvEmail.setText(user.getEmail());
+            tvPhone.setText(user.getNumber());
+            tvAge.setText(user.getAge());
+            Guardian guardian = db.fetchGuardian();
+            if(guardian != null){
+                tvGuardianOne.setText(guardian.getFirstContact());
+                tvGuardianTwo.setText(guardian.getSecondContact());
+            }
+        }
     }
 }

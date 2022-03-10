@@ -1,4 +1,4 @@
-package com.fyp.womensafetyapp.FireBaseRepo.Authentication_Controller;
+package com.fyp.womensafetyapp.FireBaseRepo.Controller;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.Toast;

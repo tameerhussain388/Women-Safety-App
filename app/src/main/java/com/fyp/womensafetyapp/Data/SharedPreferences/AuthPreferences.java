@@ -5,15 +5,14 @@ import android.widget.Toast;
 
 public class AuthPreferences {
 
-    public void storeLoginFlag(boolean flag, Context context)
-    {
+    public void storeLoginFlag(boolean flag, Context context) {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString("login_flag",Boolean.toString(flag));
         editor.apply();
     }
-    public Boolean getLoginFlag(Context context)
-    {
+
+    public Boolean getLoginFlag(Context context) {
         SharedPreferences sharedPreferences=context.getSharedPreferences("application",Context.MODE_PRIVATE);
         String flag=sharedPreferences.getString("login_flag","false");
         return Boolean.parseBoolean(flag);

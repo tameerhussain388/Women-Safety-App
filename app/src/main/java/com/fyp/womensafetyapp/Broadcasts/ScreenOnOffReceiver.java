@@ -1,13 +1,9 @@
 package com.fyp.womensafetyapp.Broadcasts;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-
-import androidx.core.content.ContextCompat;
-
-import com.fyp.womensafetyapp.Screens.DashboardActivity;
-import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
+import android.content.Context;
+import android.content.BroadcastReceiver;
+import com.fyp.womensafetyapp.utils.Alert;
 
 public class ScreenOnOffReceiver extends BroadcastReceiver {
 
@@ -20,7 +16,8 @@ public class ScreenOnOffReceiver extends BroadcastReceiver {
             count++;
             if (count == 2) {
                 count = 0;
-                DashboardActivity.getInstance().getLastLocation();
+                Alert alert = new Alert(context);
+                alert.send();
             }
         }
     }

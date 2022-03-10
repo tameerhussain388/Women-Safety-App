@@ -30,7 +30,7 @@ public class ScreenOnOffBackgroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        createNotification();
+        createNotificationChannel();
         Intent mainIntent = new Intent(this, DashboardActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,mainIntent, 0);
         Notification notification = new NotificationCompat.Builder(this,"safetyId")
@@ -56,14 +56,15 @@ public class ScreenOnOffBackgroundService extends Service {
         screenOnOffReceiver = new ScreenOnOffReceiver();
         // Register the broadcast receiver with the intent filter object.
 //        registerReceiver(screenOnOffReceiver, intentFilter);
-        HandlerThread broadcastHandlerThread = new HandlerThread("SafetyThread");
-        broadcastHandlerThread.start();
-        Looper looper = broadcastHandlerThread.getLooper();
-        Handler broadcastHandler = new Handler(looper);
-        registerReceiver(screenOnOffReceiver,intentFilter,null,broadcastHandler);
+//        HandlerThread broadcastHandlerThread = new HandlerThread("SafetyThread");
+//        broadcastHandlerThread.start();
+//        Looper looper = broadcastHandlerThread.getLooper();
+//        Handler broadcastHandler = new Handler(looper);
+       // registerReceiver(screenOnOffReceiver,intentFilter,null,broadcastHandler);
+        registerReceiver(screenOnOffReceiver,intentFilter);
     }
 
-    private void createNotification() {
+    private void createNotificationChannel() {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O ){
             NotificationChannel channel = new NotificationChannel(

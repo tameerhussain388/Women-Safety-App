@@ -18,10 +18,11 @@ public class LoadingDialogBar {
     }
 
     public void showDialog(String title){
+
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        TextView txtTitle = dialog.findViewById(R.id.textView4);
+        TextView txtTitle = dialog.findViewById(R.id.tvDialogTitle);
         txtTitle.setText(title);
         dialog.create();
         dialog.show();

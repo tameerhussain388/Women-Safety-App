@@ -1,167 +1,110 @@
 package com.fyp.womensafetyapp.Screens;
-import androidx.appcompat.app.AppCompatActivity;
-import android.Manifest;
-import android.content.Context;
+
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.utils.LoadingDialogBar;
 import com.fyp.womensafetyapp.utils.NetworkHelper;
+import com.fyp.womensafetyapp.utils.Permission;
+import com.fyp.womensafetyapp.utils.Validator;
 import com.google.firebase.auth.FirebaseAuth;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import java.util.List;
+
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public TextView tvRegister;
-    public Button btnSignIn;
-    public EditText etEmail;
-    public EditText etPassword;
-    public TextView tvForgetPass;
-    public LoadingDialogBar dialogBar;
+    private EditText etEmail;
+    private Button btnSignIn;
+    private TextView tvRegister;
+    private EditText etPassword;
+    private TextView tvForgetPass;
+    private LoadingDialogBar dialogBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         tvRegister = findViewById(R.id.tvRegister);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnSignIn = findViewById(R.id.btnSignIn);
-        tvForgetPass=findViewById(R.id.forget_pass);
-        dialogBar = new LoadingDialogBar(this);
-        requestPermissions();
-        btnSignIn.setOnClickListener(view -> {
-            if(NetworkHelper.getInstance().haveNetworkConnection(this))
-            {
-                if (validateEmail() && validatePassword()) {
-                    if (TextUtils.isEmpty(etEmail.toString())) {
-                        Toast.makeText(getApplicationContext(), "Enter your mail address", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (TextUtils.isEmpty(etPassword.toString())) {
-                        Toast.makeText(getApplicationContext(), "Enter your password", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    dialogBar.showDialog("Loading");
-                    signIn(etEmail.getText().toString().trim(),etPassword.getText().toString());
-                }
-            }else {
-                Toast.makeText(this,"Please connect your device with internet",Toast.LENGTH_SHORT).show();
-            }
-        });
-        tvRegister.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SignUpActivity.class);
-            startActivity(intent);
-        });
+        tvForgetPass = findViewById(R.id.forget_pass);
 
-        tvForgetPass.setOnClickListener(view -> {
-            Intent intent=new Intent(this, ForgetPassword.class);
-            startActivity(intent);
-        });
+        dialogBar = new LoadingDialogBar(this);
+
+        Permission permission = new Permission(this);
+        permission.requestAll();
+
+        btnSignIn.setOnClickListener(view -> signInUser());
+        tvRegister.setOnClickListener(view -> startSignUpActivity());
+        tvForgetPass.setOnClickListener(view -> startForgetPasswordActivity());
     }
 
-    public void signIn(String email,String password){
+    private void signInUser() {
+        if (NetworkHelper.getInstance().haveNetworkConnection(this)) {
+            if (validateFields()) {
+                dialogBar.showDialog("Loading");
+                String email = etEmail.getText().toString().trim();
+                String password = etPassword.getText().toString();
+                signIn(email, password);
+            }
+        } else {
+            Toast.makeText(this, "Please connect your device with internet", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        AuthPreferences authPreferences=new AuthPreferences();
+    public void startSignUpActivity() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
+    public void startForgetPasswordActivity() {
+        Intent intent = new Intent(this, ForgetPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    private boolean validateFields() {
+
+        Validator validator = new Validator();
+        if (!validator.validateEmail(etEmail))
+            return false;
+        else return validator.validatePassword(etPassword);
+    }
+
+    private void signIn(String email, String password) {
+
+        AuthPreferences authPreferences = new AuthPreferences();
         try {
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password)
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         dialogBar.hideDialog();
-                        if(task.isSuccessful()) {
-                          if(Objects.requireNonNull(Firebase_Auth.getInstance().getCurrentUser()).isEmailVerified()){
-                                authPreferences.storeLoginFlag(true,LoginActivity.this);
-                                Intent intent = new Intent(LoginActivity.this,DashboardActivity.class);
+                        if (task.isSuccessful()) {
+                            if (Objects.requireNonNull(Firebase_Auth.getInstance().getCurrentUser()).isEmailVerified()) {
+                                authPreferences.storeLoginFlag(true, LoginActivity.this);
+                                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                                 startActivity(intent);
                                 finish();
-                            }else
-                          {
-                              Toast.makeText(LoginActivity.this, "Please verify your email first",Toast.LENGTH_LONG).show();
-                          }
-
-                        }else{
-                            Toast.makeText(LoginActivity.this, "OOPS! Something went wrong",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Please verify your email first", Toast.LENGTH_LONG).show();
+                            }
                         }
-                    }).addOnFailureListener(task ->Toast.makeText(LoginActivity.this, task.getMessage(),Toast.LENGTH_SHORT).show()
-);
-        }catch (Exception e)
-        {
-            Toast.makeText(LoginActivity.this, e.getMessage(),Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    private void requestLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean isEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        if(!isEnabled){
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }
-    }
-
-    private void requestPermissions(){
-
-        Dexter.withContext(this)
-                .withPermissions(Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS,Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
-                .withListener(new MultiplePermissionsListener(){
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                        if(!multiplePermissionsReport.areAllPermissionsGranted()){
-                            Toast.makeText(getApplicationContext(),"Please Grant Permissions to use the app",Toast.LENGTH_LONG).show();
-                            finishAffinity();
-                        }else {
-                            requestLocation();
-                        }
-                    }
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
-                        permissionToken.continuePermissionRequest();
-                    }
-
-                }).check();
-    }
-
-    private boolean validateEmail() {
-        String emailInput = etEmail.getText().toString().trim();
-
-        if (emailInput.isEmpty()) {
-            etEmail.setError("Email can't be empty");
-            return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            etEmail.setError("Invalid email address");
-            return false;
-        } else {
-            etEmail.setError(null);
-            return true;
-        }
-    }
-
-    private boolean validatePassword() {
-        String passwordInput = etPassword.getText().toString().trim();
-        if (passwordInput.isEmpty()) {
-            etPassword.setError("Password can't be empty");
-            return false;
-        }
-        else {
-            etPassword.setError(null);
-            return true;
+                    })
+                    .addOnFailureListener(task -> {
+                        Toast.makeText(LoginActivity.this, task.getMessage(), Toast.LENGTH_SHORT).show();
+                        etPassword.setText("");
+            });
+        } catch (Exception e) {
+            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

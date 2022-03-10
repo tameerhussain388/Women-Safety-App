@@ -1,12 +1,12 @@
 package com.fyp.womensafetyapp.Models;
 
-public class CenterModel {
+public class Center {
 
-    private String title;
-    private Double lat;
-    private Double lng;
+    private final String title;
+    private final Double lat;
+    private final Double lng;
 
-    public CenterModel(String title, Double lat, Double lng) {
+    public Center(String title, Double lat, Double lng) {
         this.title = title;
         this.lat = lat;
         this.lng = lng;

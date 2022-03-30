@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
 import com.fyp.womensafetyapp.FireBaseRepo.Controller.SignOut;
+import com.fyp.womensafetyapp.Interfaces.LoaderCallback;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
 import com.fyp.womensafetyapp.Utils.Alert;
@@ -59,9 +60,17 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void sendAlert() {
-        dialogBar.showDialog("Sending...");
         Alert alert = new Alert(this);
-        alert.send(() -> dialogBar.hideDialog());
+        alert.send(new LoaderCallback() {
+            @Override
+            public void start() {
+                dialogBar.showDialog("Sending...");
+            }
+            @Override
+            public void finish() {
+                dialogBar.hideDialog();
+            }
+        });
     }
 
     private void startCenterActivity() {

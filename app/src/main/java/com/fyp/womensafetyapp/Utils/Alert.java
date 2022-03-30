@@ -24,6 +24,7 @@ public class Alert {
             Toast.makeText(context, "Please add guardians", Toast.LENGTH_LONG).show();
             return;
         }
+        if(callback != null) callback.start();
         Permission permission = new Permission(context);
         LocationUtil locationUtil = new LocationUtil(context);
         if (permission.hasLocationPermission() && permission.hasSmsPermission()) {

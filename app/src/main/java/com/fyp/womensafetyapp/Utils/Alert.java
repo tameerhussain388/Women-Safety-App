@@ -24,17 +24,18 @@ public class Alert {
             Toast.makeText(context, "Please add guardians", Toast.LENGTH_LONG).show();
             return;
         }
-        if(callback != null) callback.start();
         Permission permission = new Permission(context);
         LocationUtil locationUtil = new LocationUtil(context);
         if (permission.hasLocationPermission() && permission.hasSmsPermission()) {
             // check if location is enabled
             if (locationUtil.isLocationEnabled()) {
+                if(callback != null) callback.start();
                 locationUtil.fetchLocation().addOnCompleteListener(task -> {
                     Location location = task.getResult();
                     if (location != null) {
                        send(guardian,location,callback);
                     }else{
+                        if(callback != null) callback.finish();
                         Toast.makeText(context.getApplicationContext(),"Error while sending alert",Toast.LENGTH_SHORT).show();
                     }
                 });

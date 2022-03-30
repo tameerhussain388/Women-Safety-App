@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import com.fyp.womensafetyapp.Models.Center;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.LocationUtil;
+import com.fyp.womensafetyapp.Utils.LocationUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;

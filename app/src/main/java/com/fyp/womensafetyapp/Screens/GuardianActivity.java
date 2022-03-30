@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.Validator;
+import com.fyp.womensafetyapp.Utils.Validator;
 import com.fyp.womensafetyapp.Models.Guardian;
 import androidx.appcompat.app.AppCompatActivity;
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;

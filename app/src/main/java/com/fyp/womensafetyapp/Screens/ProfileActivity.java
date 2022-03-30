@@ -8,9 +8,9 @@ import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.Models.Guardian;
 import com.fyp.womensafetyapp.Models.User;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.LoadingDialogBar;
-import com.fyp.womensafetyapp.utils.LocalDBHelper;
-import com.fyp.womensafetyapp.utils.SetterFetcherHelper;
+import com.fyp.womensafetyapp.Utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.Utils.LocalDBHelper;
+import com.fyp.womensafetyapp.Utils.SetterFetcherHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 

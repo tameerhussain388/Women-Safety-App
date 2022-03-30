@@ -11,9 +11,9 @@ import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.StoreUser;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.User;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.LoadingDialogBar;
-import com.fyp.womensafetyapp.utils.NetworkHelper;
-import com.fyp.womensafetyapp.utils.Validator;
+import com.fyp.womensafetyapp.Utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.Utils.NetworkHelper;
+import com.fyp.womensafetyapp.Utils.Validator;
 
 public class SignUpActivity extends AppCompatActivity {
 

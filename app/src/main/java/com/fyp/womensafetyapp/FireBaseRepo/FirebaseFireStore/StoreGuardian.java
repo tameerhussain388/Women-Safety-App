@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.Models.Guardian;
-import com.fyp.womensafetyapp.utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.Utils.LoadingDialogBar;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;

@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.fyp.womensafetyapp.FireBaseRepo.Controller.ForgetPass;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.Validator;
+import com.fyp.womensafetyapp.Utils.Validator;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 

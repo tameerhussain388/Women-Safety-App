@@ -55,13 +55,11 @@ public class ScreenOnOffBackgroundService extends Service {
         // Create a network change broadcast receiver.
         screenOnOffReceiver = new ScreenOnOffReceiver();
         // Register the broadcast receiver with the intent filter object.
-//        registerReceiver(screenOnOffReceiver, intentFilter);
-//        HandlerThread broadcastHandlerThread = new HandlerThread("SafetyThread");
-//        broadcastHandlerThread.start();
-//        Looper looper = broadcastHandlerThread.getLooper();
-//        Handler broadcastHandler = new Handler(looper);
-       // registerReceiver(screenOnOffReceiver,intentFilter,null,broadcastHandler);
-        registerReceiver(screenOnOffReceiver,intentFilter);
+        HandlerThread broadcastHandlerThread = new HandlerThread("SafetyThread");
+        broadcastHandlerThread.start();
+        Looper looper = broadcastHandlerThread.getLooper();
+        Handler broadcastHandler = new Handler(looper);
+        registerReceiver(screenOnOffReceiver,intentFilter,null,broadcastHandler);
     }
 
     private void createNotificationChannel() {
@@ -76,7 +74,6 @@ public class ScreenOnOffBackgroundService extends Service {
             manager.createNotificationChannel(channel);
         }
     }
-
 
     @Override
     public void onDestroy() {

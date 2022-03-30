@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -14,14 +13,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-
 import com.fyp.womensafetyapp.FireBaseRepo.Controller.SignOut;
 import com.fyp.womensafetyapp.R;
 import com.fyp.womensafetyapp.Services.ScreenOnOffBackgroundService;
-import com.fyp.womensafetyapp.utils.Alert;
-import com.fyp.womensafetyapp.utils.LoadingDialogBar;
-import com.fyp.womensafetyapp.utils.ServiceUtil;
-import com.fyp.womensafetyapp.utils.SetterFetcherHelper;
+import com.fyp.womensafetyapp.Utils.Alert;
+import com.fyp.womensafetyapp.Utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.Utils.ServiceUtil;
+import com.fyp.womensafetyapp.Utils.SetterFetcherHelper;
 
 public class DashboardActivity extends AppCompatActivity {
     public Button btnAlert;
@@ -61,8 +59,9 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void sendAlert() {
+        dialogBar.showDialog("Sending...");
         Alert alert = new Alert(this);
-        alert.send();
+        alert.send(() -> dialogBar.hideDialog());
     }
 
     private void startCenterActivity() {

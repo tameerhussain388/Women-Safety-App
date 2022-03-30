@@ -10,7 +10,7 @@ import com.fyp.womensafetyapp.Data.LocalDBRepo.LocalDBRepo;
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.FirebaseFireStore.FirebaseGuardian;
 import com.fyp.womensafetyapp.Screens.LoginActivity;
-import com.fyp.womensafetyapp.utils.ServiceUtil;
+import com.fyp.womensafetyapp.Utils.ServiceUtil;
 
 public class SignOut {
 

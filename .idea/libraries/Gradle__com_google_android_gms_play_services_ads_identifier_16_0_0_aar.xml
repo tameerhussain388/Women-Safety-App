@@ -13,6 +13,9 @@
       <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/45c16628e7f3ace4e9bfe9535f804bec/transformed/jetified-play-services-ads-identifier-16.0.0/AndroidManifest.xml" />
       <root url="file://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/45c16628e7f3ace4e9bfe9535f804bec/transformed/jetified-play-services-ads-identifier-16.0.0/res" />
       <root url="jar://$PROJECT_DIR$/../../Android/Sdk/caches/transforms-3/45c16628e7f3ace4e9bfe9535f804bec/transformed/jetified-play-services-ads-identifier-16.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6585ab1f1095c12d53823b0f021105cd/transformed/jetified-play-services-ads-identifier-16.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6585ab1f1095c12d53823b0f021105cd/transformed/jetified-play-services-ads-identifier-16.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6585ab1f1095c12d53823b0f021105cd/transformed/jetified-play-services-ads-identifier-16.0.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

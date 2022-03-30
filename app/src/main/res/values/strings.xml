@@ -8,7 +8,7 @@
     <string name="send_pass">RESET PASSWORD</string>
     <string name="back">BACK</string>
     <string name="email">Email</string>
-    <string name="enter_email">Enter your email here...</string>
+    <string name="enter_email">Enter your email here…</string>
     <string name="password">Password</string>
     <string name="register_here">Register</string>
     <string name="create_new_account">Don\'t have an account? Sign up</string>
@@ -27,5 +27,7 @@
     <string name="update">Update</string>
     <string name="guardian_1">Guardian 1</string>
     <string name="guardian_2">Guardian 2</string>
+    <string name="server_url">https://women-safety-application.herokuapp.com/</string>
     <string name="title_activity_emergency_centers">EmergencyCentersActivity</string>
+    <string name="centers">Centers</string>
 </resources>

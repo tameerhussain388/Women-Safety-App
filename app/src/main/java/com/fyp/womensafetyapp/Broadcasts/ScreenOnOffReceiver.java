@@ -3,7 +3,7 @@ package com.fyp.womensafetyapp.Broadcasts;
 import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
-import com.fyp.womensafetyapp.utils.Alert;
+import com.fyp.womensafetyapp.Utils.Alert;
 
 public class ScreenOnOffReceiver extends BroadcastReceiver {
 
@@ -17,7 +17,7 @@ public class ScreenOnOffReceiver extends BroadcastReceiver {
             if (count == 2) {
                 count = 0;
                 Alert alert = new Alert(context);
-                alert.send();
+                alert.send(null);
             }
         }
     }

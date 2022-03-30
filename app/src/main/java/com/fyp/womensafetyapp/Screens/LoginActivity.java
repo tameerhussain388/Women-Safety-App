@@ -12,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.fyp.womensafetyapp.Data.SharedPreferences.AuthPreferences;
 import com.fyp.womensafetyapp.FireBaseRepo.Firebase_Auth.Firebase_Auth;
 import com.fyp.womensafetyapp.R;
-import com.fyp.womensafetyapp.utils.LoadingDialogBar;
-import com.fyp.womensafetyapp.utils.NetworkHelper;
-import com.fyp.womensafetyapp.utils.Permission;
-import com.fyp.womensafetyapp.utils.Validator;
+import com.fyp.womensafetyapp.Utils.LoadingDialogBar;
+import com.fyp.womensafetyapp.Utils.NetworkHelper;
+import com.fyp.womensafetyapp.Utils.Permission;
+import com.fyp.womensafetyapp.Utils.Validator;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
